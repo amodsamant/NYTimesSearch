@@ -2,23 +2,23 @@ package com.nytimessearch.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Toast;
 
-import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.nytimessearch.R;
 import com.nytimessearch.adapters.NYTArticlesAdapter;
 import com.nytimessearch.models.NYTArticle;
+import com.nytimessearch.network.NYTimesClient;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,12 +31,13 @@ import cz.msebera.android.httpclient.Header;
 
 public class SearchActivity extends AppCompatActivity {
 
-    AutoCompleteTextView actvQuery;
     GridView gvArticles;
     Button btnSearch;
 
     List<NYTArticle> articles;
     NYTArticlesAdapter adapter;
+
+    NYTimesClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +51,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private void setupViews() {
 
-        actvQuery = (AutoCompleteTextView) findViewById(R.id.actvSearch);
         gvArticles = (GridView) findViewById(R.id.gvResults);
-        btnSearch = (Button) findViewById(R.id.btnSearch);
 
         articles = new ArrayList<>();
         adapter = new NYTArticlesAdapter(this, articles);
@@ -77,35 +76,36 @@ public class SearchActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_search, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                searchArticles(query);
+                searchView.clearFocus();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
-    public void searchArticles(View view) {
+    public void searchArticles(String query) {
 
-        String query = actvQuery.getText().toString();
+        this.client = new NYTimesClient();
 
-        AsyncHttpClient client = new AsyncHttpClient();
-
-        String url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
-        RequestParams requestParams = new RequestParams();
-        requestParams.put("api-key", "dac417bd142940b1ae1ff7a36261426f");
-
-        client.get(url, requestParams, new JsonHttpResponseHandler(){
+        client.searchNYTimesArticles(query, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -117,11 +117,11 @@ public class SearchActivity extends AppCompatActivity {
                 } catch (JSONException e) {
 
                 }
-
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable,
+                                  JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
                 Toast.makeText(SearchActivity.this, "Request failed!", Toast.LENGTH_SHORT).show();
             }

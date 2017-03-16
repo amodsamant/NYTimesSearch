@@ -42,7 +42,6 @@ public class NYTArticlesAdapter extends ArrayAdapter<NYTArticle> {
 
         textView.setText(article.getHeadline());
 
-
         return convertView;
     }
 }
