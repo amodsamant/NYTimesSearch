@@ -2,6 +2,7 @@ package com.nytimessearch.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -10,13 +11,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nytimessearch.R;
 import com.nytimessearch.adapters.NYTArticlesAdapter;
+import com.nytimessearch.fragments.FilterFragment;
+import com.nytimessearch.models.FilterWrapper;
 import com.nytimessearch.models.NYTArticle;
 import com.nytimessearch.network.NYTimesClient;
 
@@ -29,15 +31,17 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity
+        implements FilterFragment.FilterDialogListener {
 
     GridView gvArticles;
-    Button btnSearch;
 
     List<NYTArticle> articles;
     NYTArticlesAdapter adapter;
 
     NYTimesClient client;
+
+    FilterWrapper filter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,11 +97,18 @@ public class SearchActivity extends AppCompatActivity {
                 return false;
             }
         });
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch(item.getItemId()) {
+            case R.id.action_filter:
+                showFilterDialog();
+                break;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -105,7 +116,7 @@ public class SearchActivity extends AppCompatActivity {
 
         this.client = new NYTimesClient();
 
-        client.searchNYTimesArticles(query, new JsonHttpResponseHandler(){
+        client.searchNYTimesArticles(query, filter,new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -128,5 +139,17 @@ public class SearchActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void showFilterDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        FilterFragment filterDialogFragment = FilterFragment.newInstance(filter);
+        filterDialogFragment.show(fm, "fragment_filter");
+    }
+
+
+    @Override
+    public void onFinishEditDialog(FilterWrapper filter) {
+        this.filter = filter;
     }
 }

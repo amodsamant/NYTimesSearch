@@ -4,4 +4,11 @@
     <string name="hint">Search...</string>
     <string name="search">Search</string>
     <string name="title_activity_read_article">ReadArticleActivity</string>
+    <string name="tv_begin_date">Begin Date</string>
+    <string name="tv_sort_order">Sort Order</string>
+    <string name="tv_news_desk">News Desk Values</string>
+    <string name="arts">Arts</string>
+    <string name="fashion_style"><![CDATA[Fashion & Style]]></string>
+    <string name="sports">Sports</string>
+    <string name="btn_save">SAVE</string>
 </resources>

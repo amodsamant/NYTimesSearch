@@ -3,6 +3,7 @@ package com.nytimessearch.network;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.nytimessearch.models.FilterWrapper;
 
 public class NYTimesClient {
 
@@ -26,7 +27,8 @@ public class NYTimesClient {
         return API_BASE_URL + relativeUrl;
     }
 
-    public void searchNYTimesArticles(String query, JsonHttpResponseHandler handler) {
+    public void searchNYTimesArticles(String query, FilterWrapper filter,
+                                      JsonHttpResponseHandler handler) {
 
         String url = getApiUrl("articlesearch.json");
 
