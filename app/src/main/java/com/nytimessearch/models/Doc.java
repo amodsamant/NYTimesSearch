@@ -53,9 +53,9 @@ public class Doc {
     @SerializedName("subsection_name")
     @Expose
     private String subsectionName;
-    @SerializedName("byline")
-    @Expose
-    private Byline byline;
+//    @SerializedName("byline")
+//    @Expose
+//    private Byline byline;
     @SerializedName("type_of_material")
     @Expose
     private String typeOfMaterial;
@@ -189,13 +189,13 @@ public class Doc {
         this.subsectionName = subsectionName;
     }
 
-    public Byline getByline() {
-        return byline;
-    }
-
-    public void setByline(Byline byline) {
-        this.byline = byline;
-    }
+//    public Byline getByline() {
+//        return byline;
+//    }
+//
+//    public void setByline(Byline byline) {
+//        this.byline = byline;
+//    }
 
     public String getTypeOfMaterial() {
         return typeOfMaterial;

@@ -58,20 +58,23 @@ public class NYTArticle {
 //        Gson gson = new GsonBuilder().create();
 //
 //        NYTArticleResponse articleResponse = gson.fromJson(response, NYTArticleResponse.class);
+        if(articleResponse!=null && articleResponse.getResponse()!=null) {
+            List<Doc> docs = articleResponse.getResponse().getDocs();
+            for (Doc doc : docs) {
+                NYTArticle article = new NYTArticle();
+                article.webUrl = doc.getWebUrl();
+                if (doc.getHeadline() != null) {
+                    article.headline = doc.getHeadline().getMain();
+                }
+                if (doc.getMultimedia() != null && !doc.getMultimedia().isEmpty()
+                        && doc.getMultimedia().get(0) != null) {
+                    article.thumbnail = "http://www.nytimes.com/" + doc.getMultimedia().get(0).getUrl();
+                }
 
-        List<Doc> docs = articleResponse.getResponse().getDocs();
-        for (Doc doc : docs) {
-            NYTArticle article = new NYTArticle();
-            article.webUrl = doc.getWebUrl();
-            if (doc.getHeadline() != null) {
-                article.headline = doc.getHeadline().getMain();
+                articles.add(article);
             }
-            if (doc.getMultimedia() != null && !doc.getMultimedia().isEmpty()
-                    && doc.getMultimedia().get(0) != null) {
-                article.thumbnail = "http://www.nytimes.com/" + doc.getMultimedia().get(0).getUrl();
-            }
-
-            articles.add(article);
+        } else {
+            //TODO: Log error
         }
 
 

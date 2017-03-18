@@ -60,4 +60,17 @@ public class FilterWrapper {
     public void setSports(boolean sports) {
         this.sports = sports;
     }
+
+    public String getArts() {
+        return "Arts";
+    }
+
+    public String getFashionStyle() {
+        return "Fashion & Style";
+    }
+
+    public String getSports() {
+        return "Sports";
+    }
+
 }

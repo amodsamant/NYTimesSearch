@@ -1,6 +1,5 @@
 package com.nytimessearch.activities;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -12,7 +11,6 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -67,24 +65,23 @@ public class SearchActivity extends AppCompatActivity
         articles = new ArrayList<>();
         adapter = new NYTArticlesAdapter(this, articles);
         rvArticles.setAdapter(adapter);
-//        rvArticles.setLayoutManager(new LinearLayoutManager(this));
 
         // Attach the layout manager to the recycler view
         rvArticles.setLayoutManager(gridLayoutManager);
 
-        rvArticles.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-
-                int position = rvArticles.indexOfChild(v);
-                NYTArticle article = articles.get(position);
-
-                Intent intent = new Intent(SearchActivity.this,ReadArticleActivity.class);
-                intent.putExtra("url",article.getWebUrl());
-                startActivity(intent);
-            }
-        });
+//        rvArticles.setOnClickListener(new View.OnClickListener(){
+//
+//            @Override
+//            public void onClick(View v) {
+//
+//                int position = rvArticles.indexOfChild(v);
+//                NYTArticle article = articles.get(position);
+//
+//                Intent intent = new Intent(SearchActivity.this,ReadArticleActivity.class);
+//                intent.putExtra("url",article.getWebUrl());
+//                startActivity(intent);
+//            }
+//        });
 
         // Retain an instance so that you can call `resetState()` for fresh searches
         scrollListener = new EndlessRecyclerViewScrollListener(gridLayoutManager) {
@@ -176,9 +173,13 @@ public class SearchActivity extends AppCompatActivity
 
         articles.clear();
 
-        Call<NYTArticleResponse> call = client.getCaller(query);
-        new NYTimesNetworkCall().execute(call);
-
+        if(filter!=null) {
+            Call<NYTArticleResponse> call = client.getCallerWithFilter(query,filter);
+            new NYTimesNetworkCall().execute(call);
+        } else {
+            Call<NYTArticleResponse> call = client.getCaller(query);
+            new NYTimesNetworkCall().execute(call);
+        }
         //articles.addAll(client.searchArticles(query));
 
     }
@@ -214,6 +215,7 @@ public class SearchActivity extends AppCompatActivity
 
                 Call<NYTArticleResponse> call = params[0];
                 Response<NYTArticleResponse> resp = call.execute();
+
                 NYTArticleResponse nytArticleResponse = resp.body();
 
                 Gson gson = new GsonBuilder().create();
@@ -221,7 +223,9 @@ public class SearchActivity extends AppCompatActivity
                 NYTArticleResponse articleResponse = gson.fromJson(gson.toJson(nytArticleResponse),
                         NYTArticleResponse.class);
 
-                return nytArticleResponse;
+                return articleResponse;
+
+               // return nytArticleResponse;
 
             } catch (IOException e) {
                 //TODO: Handle this

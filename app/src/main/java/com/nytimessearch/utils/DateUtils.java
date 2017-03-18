@@ -1,6 +1,7 @@
 package com.nytimessearch.utils;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -8,10 +9,26 @@ public class DateUtils {
 
     static DateFormat mmDDYYYYDateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
+    static SimpleDateFormat yyyyMMddFormat = new SimpleDateFormat("yyyyMMdd");
+
     public static String getCurrentDate() {
 
         Date date = new Date();
         return mmDDYYYYDateFormat.format(date);
+    }
+
+    public static String getYYYYMMddFormatDate(String dateStr) {
+
+        Date date = null;
+        try {
+            date = mmDDYYYYDateFormat.parse(dateStr);
+            return yyyyMMddFormat.format(date);
+        } catch (ParseException e) {
+            //TODO: Handle
+            e.printStackTrace();
+        }
+        return null;
+
     }
 
     /**
