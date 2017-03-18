@@ -26,7 +26,7 @@ public class ReadArticleActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         url = getIntent().getStringExtra("url");
-        webView = (WebView) findViewById(R.id.webView);
+        webView = (WebView) findViewById(R.id.web_view);
 
         webView.getSettings().setLoadsImagesAutomatically(true);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -35,6 +35,8 @@ public class ReadArticleActivity extends AppCompatActivity {
         webView.setWebViewClient(new MyBrowser());
         // Load the initial URL
         webView.loadUrl(url);
+
+        getSupportActionBar().setTitle(url);
     }
 
     // Manages the behavior when URLs are loaded

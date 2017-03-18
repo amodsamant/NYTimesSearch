@@ -5,13 +5,13 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -34,7 +34,7 @@ import cz.msebera.android.httpclient.Header;
 public class SearchActivity extends AppCompatActivity
         implements FilterFragment.FilterDialogListener {
 
-    GridView gvArticles;
+    RecyclerView rvArticles;
 
     List<NYTArticle> articles;
     NYTArticlesAdapter adapter;
@@ -42,6 +42,9 @@ public class SearchActivity extends AppCompatActivity
     NYTimesClient client;
 
     FilterWrapper filter;
+
+    StaggeredGridLayoutManager gridLayoutManager =
+            new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,17 +58,22 @@ public class SearchActivity extends AppCompatActivity
 
     private void setupViews() {
 
-        gvArticles = (GridView) findViewById(R.id.gvResults);
+        rvArticles = (RecyclerView) findViewById(R.id.rvResults);
 
         articles = new ArrayList<>();
         adapter = new NYTArticlesAdapter(this, articles);
-        gvArticles.setAdapter(adapter);
+        rvArticles.setAdapter(adapter);
+//        rvArticles.setLayoutManager(new LinearLayoutManager(this));
 
-        //Listener for grid click
-        gvArticles.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        // Attach the layout manager to the recycler view
+        rvArticles.setLayoutManager(gridLayoutManager);
+
+        rvArticles.setOnClickListener(new View.OnClickListener(){
+
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onClick(View v) {
 
+                int position = rvArticles.indexOfChild(v);
                 NYTArticle article = articles.get(position);
 
                 Intent intent = new Intent(SearchActivity.this,ReadArticleActivity.class);
@@ -123,8 +131,8 @@ public class SearchActivity extends AppCompatActivity
 
                 try {
                     JSONArray results = response.getJSONObject("response").getJSONArray("docs");
-                    adapter.addAll(NYTArticle.fromJSONArray(results));
-
+                    articles.addAll(NYTArticle.fromJSONArray(results));
+                    adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
 
                 }
@@ -146,7 +154,6 @@ public class SearchActivity extends AppCompatActivity
         FilterFragment filterDialogFragment = FilterFragment.newInstance(filter);
         filterDialogFragment.show(fm, "fragment_filter");
     }
-
 
     @Override
     public void onFinishEditDialog(FilterWrapper filter) {

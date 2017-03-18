@@ -14,11 +14,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <GridView
-        android:id="@+id/gvResults"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvResults"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"
-        android:layout_centerHorizontal="true"
-        android:numColumns="2" />
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
