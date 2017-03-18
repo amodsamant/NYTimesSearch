@@ -1,6 +1,7 @@
 package com.nytimessearch.activities;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
@@ -12,24 +13,24 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
-import com.loopj.android.http.JsonHttpResponseHandler;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.nytimessearch.EndlessRecyclerViewScrollListener;
 import com.nytimessearch.R;
 import com.nytimessearch.adapters.NYTArticlesAdapter;
 import com.nytimessearch.fragments.FilterFragment;
 import com.nytimessearch.models.FilterWrapper;
 import com.nytimessearch.models.NYTArticle;
-import com.nytimessearch.network.NYTimesClient;
+import com.nytimessearch.models.NYTArticleResponse;
+import com.nytimessearch.network.NYTimesRetroClient;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import cz.msebera.android.httpclient.Header;
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class SearchActivity extends AppCompatActivity
         implements FilterFragment.FilterDialogListener {
@@ -39,9 +40,12 @@ public class SearchActivity extends AppCompatActivity
     List<NYTArticle> articles;
     NYTArticlesAdapter adapter;
 
-    NYTimesClient client;
-
+    NYTimesRetroClient client;
+    //NYTimesClient client;
     FilterWrapper filter;
+
+    // Store a member variable for the listener
+    private EndlessRecyclerViewScrollListener scrollListener;
 
     StaggeredGridLayoutManager gridLayoutManager =
             new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
@@ -82,6 +86,18 @@ public class SearchActivity extends AppCompatActivity
             }
         });
 
+        // Retain an instance so that you can call `resetState()` for fresh searches
+        scrollListener = new EndlessRecyclerViewScrollListener(gridLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+                loadNextDataFromApi(page);
+            }
+        };
+        // Adds the scroll listener to RecyclerView
+        rvArticles.addOnScrollListener(scrollListener);
+
     }
 
     @Override
@@ -120,32 +136,50 @@ public class SearchActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+//    public void searchArticles(String query) {
+//
+//        this.client = new NYTimesClient();
+//
+//        client.searchNYTimesArticles(query, filter,new JsonHttpResponseHandler(){
+//            @Override
+//            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+//                super.onSuccess(statusCode, headers, response);
+//
+//                try {
+//                    JSONArray results = response.getJSONObject("response").getJSONArray("docs");
+//                    articles.clear();
+//
+//                    articles.addAll(NYTArticle.getArticlesFromJson(response.toString()));
+//
+//                    //articles.addAll(NYTArticle.fromJSONArray(results));
+//                    adapter.notifyDataSetChanged();
+//                } catch (JSONException e) {
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(int statusCode, Header[] headers, Throwable throwable,
+//                                  JSONObject errorResponse) {
+//                super.onFailure(statusCode, headers, throwable, errorResponse);
+//                Toast.makeText(SearchActivity.this, "Request failed!", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//
+//    }
+
+
     public void searchArticles(String query) {
 
-        this.client = new NYTimesClient();
+        this.client = new NYTimesRetroClient();
 
-        client.searchNYTimesArticles(query, filter,new JsonHttpResponseHandler(){
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
+        articles.clear();
 
-                try {
-                    JSONArray results = response.getJSONObject("response").getJSONArray("docs");
-                    articles.addAll(NYTArticle.fromJSONArray(results));
-                    adapter.notifyDataSetChanged();
-                } catch (JSONException e) {
+        Call<NYTArticleResponse> call = client.getCaller(query);
+        new NYTimesNetworkCall().execute(call);
 
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable,
-                                  JSONObject errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-                Toast.makeText(SearchActivity.this, "Request failed!", Toast.LENGTH_SHORT).show();
-            }
-        });
-
+        //articles.addAll(client.searchArticles(query));
 
     }
 
@@ -159,4 +193,49 @@ public class SearchActivity extends AppCompatActivity
     public void onFinishEditDialog(FilterWrapper filter) {
         this.filter = filter;
     }
+
+
+    //TODO: Move this function outise of this activity
+    // Append the next page of data into the adapter
+    // This method probably sends out a network request and appends new data items to your adapter.
+    public void loadNextDataFromApi(int offset) {
+        // Send an API request to retrieve appropriate paginated data
+        //  --> Send the request including an offset value (i.e `page`) as a query parameter.
+        //  --> Deserialize and construct new model objects from the API response
+        //  --> Append the new data objects to the existing set of items inside the array of items
+        //  --> Notify the adapter of the new items made with `notifyItemRangeInserted()`
+    }
+
+    private class NYTimesNetworkCall extends AsyncTask<Call, Void, NYTArticleResponse> {
+
+        @Override
+        protected NYTArticleResponse doInBackground(Call... params) {
+            try {
+
+                Call<NYTArticleResponse> call = params[0];
+                Response<NYTArticleResponse> resp = call.execute();
+                NYTArticleResponse nytArticleResponse = resp.body();
+
+                Gson gson = new GsonBuilder().create();
+
+                NYTArticleResponse articleResponse = gson.fromJson(gson.toJson(nytArticleResponse),
+                        NYTArticleResponse.class);
+
+                return nytArticleResponse;
+
+            } catch (IOException e) {
+                //TODO: Handle this
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(NYTArticleResponse response) {
+            List<NYTArticle> nytArticles = NYTArticle.getArticlesFromJson(response);
+            articles.addAll(nytArticles);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
 }

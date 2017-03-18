@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nytimessearch.R;
@@ -23,13 +22,11 @@ import java.util.List;
 public class NYTArticlesAdapter extends RecyclerView.Adapter<NYTArticlesAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public LinearLayout llayout;
         public ImageView ivThumbnail;
         public TextView tvHeadline;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            llayout = (LinearLayout) itemView.findViewById(R.id.ll_grid_box);
             ivThumbnail = (ImageView) itemView.findViewById(R.id.iv_thumbnail);
             tvHeadline = (TextView) itemView.findViewById(R.id.tv_headline);
         }
@@ -69,7 +66,7 @@ public class NYTArticlesAdapter extends RecyclerView.Adapter<NYTArticlesAdapter.
         int height = displayMetrics.heightPixels;
         int width = displayMetrics.widthPixels;
 
-        holder.llayout.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ReadArticleActivity.class);

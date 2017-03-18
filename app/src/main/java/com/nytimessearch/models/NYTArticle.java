@@ -29,6 +29,10 @@ public class NYTArticle {
         return thumbnail;
     }
 
+    public NYTArticle() {
+
+    }
+
     public NYTArticle(JSONObject jsonObject) {
 
         try{
@@ -45,6 +49,33 @@ public class NYTArticle {
         } catch (JSONException e) {
 
         }
+    }
+
+    public static List<NYTArticle> getArticlesFromJson(NYTArticleResponse articleResponse){
+
+        List<NYTArticle> articles = new ArrayList<>();
+
+//        Gson gson = new GsonBuilder().create();
+//
+//        NYTArticleResponse articleResponse = gson.fromJson(response, NYTArticleResponse.class);
+
+        List<Doc> docs = articleResponse.getResponse().getDocs();
+        for (Doc doc : docs) {
+            NYTArticle article = new NYTArticle();
+            article.webUrl = doc.getWebUrl();
+            if (doc.getHeadline() != null) {
+                article.headline = doc.getHeadline().getMain();
+            }
+            if (doc.getMultimedia() != null && !doc.getMultimedia().isEmpty()
+                    && doc.getMultimedia().get(0) != null) {
+                article.thumbnail = "http://www.nytimes.com/" + doc.getMultimedia().get(0).getUrl();
+            }
+
+            articles.add(article);
+        }
+
+
+        return articles;
     }
 
     public static List<NYTArticle> fromJSONArray(JSONArray articlesJson) {
