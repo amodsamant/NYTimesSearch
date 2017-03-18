@@ -11,23 +11,27 @@ import retrofit2.http.Query;
 public interface NYTArticeService {
     @GET("articlesearch.json")
     public Call<NYTArticleResponse> getArticles(@Query("api-key") String apiKey,
-                                                @Query("q") String query);
+                                                @Query("q") String query,
+                                                @Query("page") int page);
 
     @GET("articlesearch.json")
-    public Call<NYTArticleResponse> getArticles(@Query("api-key") String apiKey);
+    public Call<NYTArticleResponse> getArticles(@Query("api-key") String apiKey,
+                                                @Query("page") int page);
 
     @GET("articlesearch.json")
     public Call<NYTArticleResponse> getArticlesWithFilters(@Query("api-key") String apiKey,
                                                            @Query("q") String query,
                                                            @Query("begin_date") String beginDate,
                                                            @Query("sort") String sort,
-                                                           @Query("fq") String newsDesk);
+                                                           @Query("fq") String newsDesk,
+                                                           @Query("page") int page);
 
     @GET("articlesearch.json")
     public Call<NYTArticleResponse> getArticlesWithFilters(@Query("api-key") String apiKey,
                                                            @Query("q") String query,
                                                            @Query("begin_date") String beginDate,
-                                                           @Query("sort") String sort);
+                                                           @Query("sort") String sort,
+                                                           @Query("page") int page);
 
     public final String API_BASE_URL = "https://api.nytimes.com/svc/search/v2/";
 

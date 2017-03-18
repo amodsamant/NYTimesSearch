@@ -19,15 +19,16 @@ public class NYTimesRetroClient {
     public NYTimesRetroClient() {
     }
 
-    public Call<NYTArticleResponse> getCaller(String query) {
+    public Call<NYTArticleResponse> getCaller(String query, int offset) {
 
         NYTArticeService service = retrofit.create(NYTArticeService.class);
 
-        Call<NYTArticleResponse> call = service.getArticles(API_KEY, query);
+        Call<NYTArticleResponse> call = service.getArticles(API_KEY, query, offset);
         return call;
     }
 
-    public Call<NYTArticleResponse> getCallerWithFilter(String query, FilterWrapper filter) {
+    public Call<NYTArticleResponse> getCallerWithFilter(String query, FilterWrapper filter,
+                                                        int offset) {
 
         NYTArticeService service = retrofit.create(NYTArticeService.class);
 
@@ -36,11 +37,11 @@ public class NYTimesRetroClient {
         if(!filter.isArts() && !filter.isFashionStyle() && !filter.isSports()) {
             call = service.getArticlesWithFilters(API_KEY, query,
                     DateUtils.getYYYYMMddFormatDate(filter.getBeginDate()),
-                    filter.getSort());
+                    filter.getSort(), offset);
         } else {
             call = service.getArticlesWithFilters(API_KEY, query,
                     DateUtils.getYYYYMMddFormatDate(filter.getBeginDate()),
-                    filter.getSort(), buildNewsDesk(filter));
+                    filter.getSort(), buildNewsDesk(filter), offset);
         }
         return call;
     }

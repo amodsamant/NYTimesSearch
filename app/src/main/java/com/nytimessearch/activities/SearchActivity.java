@@ -39,8 +39,10 @@ public class SearchActivity extends AppCompatActivity
     NYTArticlesAdapter adapter;
 
     NYTimesRetroClient client;
-    //NYTimesClient client;
+
     FilterWrapper filter;
+
+    String currentQuery;
 
     // Store a member variable for the listener
     private EndlessRecyclerViewScrollListener scrollListener;
@@ -54,8 +56,9 @@ public class SearchActivity extends AppCompatActivity
         setContentView(R.layout.activity_search);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         setupViews();
+
+        currentQuery = "";
     }
 
     private void setupViews() {
@@ -69,26 +72,11 @@ public class SearchActivity extends AppCompatActivity
         // Attach the layout manager to the recycler view
         rvArticles.setLayoutManager(gridLayoutManager);
 
-//        rvArticles.setOnClickListener(new View.OnClickListener(){
-//
-//            @Override
-//            public void onClick(View v) {
-//
-//                int position = rvArticles.indexOfChild(v);
-//                NYTArticle article = articles.get(position);
-//
-//                Intent intent = new Intent(SearchActivity.this,ReadArticleActivity.class);
-//                intent.putExtra("url",article.getWebUrl());
-//                startActivity(intent);
-//            }
-//        });
-
         // Retain an instance so that you can call `resetState()` for fresh searches
         scrollListener = new EndlessRecyclerViewScrollListener(gridLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                // Triggered only when new data needs to be appended to the list
-                // Add whatever code is needed to append new items to the bottom of the list
+                // Triggered only when new data is needed. Endless scrolling
                 loadNextDataFromApi(page);
             }
         };
@@ -108,7 +96,16 @@ public class SearchActivity extends AppCompatActivity
             @Override
             public boolean onQueryTextSubmit(String query) {
 
-                searchArticles(query);
+                currentQuery = query;
+
+                //Only place to reset adapter and articles for the new query
+                //and reset the scroll listener state as this is a new query
+                articles.clear();
+                adapter.notifyDataSetChanged();
+                scrollListener.resetState();
+
+                searchArticles(query,0);
+
                 searchView.clearFocus();
                 return true;
             }
@@ -133,54 +130,17 @@ public class SearchActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-//    public void searchArticles(String query) {
-//
-//        this.client = new NYTimesClient();
-//
-//        client.searchNYTimesArticles(query, filter,new JsonHttpResponseHandler(){
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-//                super.onSuccess(statusCode, headers, response);
-//
-//                try {
-//                    JSONArray results = response.getJSONObject("response").getJSONArray("docs");
-//                    articles.clear();
-//
-//                    articles.addAll(NYTArticle.getArticlesFromJson(response.toString()));
-//
-//                    //articles.addAll(NYTArticle.fromJSONArray(results));
-//                    adapter.notifyDataSetChanged();
-//                } catch (JSONException e) {
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(int statusCode, Header[] headers, Throwable throwable,
-//                                  JSONObject errorResponse) {
-//                super.onFailure(statusCode, headers, throwable, errorResponse);
-//                Toast.makeText(SearchActivity.this, "Request failed!", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//
-//    }
-
-
-    public void searchArticles(String query) {
+    public void searchArticles(String query, int offset) {
 
         this.client = new NYTimesRetroClient();
 
-        articles.clear();
-
         if(filter!=null) {
-            Call<NYTArticleResponse> call = client.getCallerWithFilter(query,filter);
+            Call<NYTArticleResponse> call = client.getCallerWithFilter(query,filter, offset);
             new NYTimesNetworkCall().execute(call);
         } else {
-            Call<NYTArticleResponse> call = client.getCaller(query);
+            Call<NYTArticleResponse> call = client.getCaller(query, offset);
             new NYTimesNetworkCall().execute(call);
         }
-        //articles.addAll(client.searchArticles(query));
 
     }
 
@@ -200,11 +160,10 @@ public class SearchActivity extends AppCompatActivity
     // Append the next page of data into the adapter
     // This method probably sends out a network request and appends new data items to your adapter.
     public void loadNextDataFromApi(int offset) {
-        // Send an API request to retrieve appropriate paginated data
-        //  --> Send the request including an offset value (i.e `page`) as a query parameter.
-        //  --> Deserialize and construct new model objects from the API response
-        //  --> Append the new data objects to the existing set of items inside the array of items
-        //  --> Notify the adapter of the new items made with `notifyItemRangeInserted()`
+
+        // API request to retrieve appropriate paginated data
+        searchArticles(currentQuery, offset);
+
     }
 
     private class NYTimesNetworkCall extends AsyncTask<Call, Void, NYTArticleResponse> {
@@ -225,8 +184,6 @@ public class SearchActivity extends AppCompatActivity
 
                 return articleResponse;
 
-               // return nytArticleResponse;
-
             } catch (IOException e) {
                 //TODO: Handle this
                 e.printStackTrace();
@@ -238,7 +195,8 @@ public class SearchActivity extends AppCompatActivity
         protected void onPostExecute(NYTArticleResponse response) {
             List<NYTArticle> nytArticles = NYTArticle.getArticlesFromJson(response);
             articles.addAll(nytArticles);
-            adapter.notifyDataSetChanged();
+            int curSize = adapter.getItemCount();
+            adapter.notifyItemRangeInserted(curSize, articles.size() - 1);
         }
     }
 
