@@ -23,6 +23,12 @@ public interface NYTArticeService {
                                                            @Query("sort") String sort,
                                                            @Query("fq") String newsDesk);
 
+    @GET("articlesearch.json")
+    public Call<NYTArticleResponse> getArticlesWithFilters(@Query("api-key") String apiKey,
+                                                           @Query("q") String query,
+                                                           @Query("begin_date") String beginDate,
+                                                           @Query("sort") String sort);
+
     public final String API_BASE_URL = "https://api.nytimes.com/svc/search/v2/";
 
     public static final Retrofit retrofit = new Retrofit.Builder()
