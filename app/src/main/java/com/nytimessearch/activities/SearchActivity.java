@@ -1,7 +1,10 @@
 package com.nytimessearch.activities;
 
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +14,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -22,6 +26,7 @@ import com.nytimessearch.models.FilterWrapper;
 import com.nytimessearch.models.NYTArticle;
 import com.nytimessearch.models.NYTArticleResponse;
 import com.nytimessearch.network.NYTimesRetroClient;
+import com.nytimessearch.network.NetworkUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,22 +38,23 @@ import retrofit2.Response;
 public class SearchActivity extends AppCompatActivity
         implements FilterFragment.FilterDialogListener {
 
-    RecyclerView rvArticles;
+    private CoordinatorLayout coordinatorLayout;
 
-    List<NYTArticle> articles;
-    NYTArticlesAdapter adapter;
+    private RecyclerView rvArticles;
 
-    NYTimesRetroClient client;
+    private List<NYTArticle> articles;
+    private NYTArticlesAdapter adapter;
 
-    FilterWrapper filter;
+    private NYTimesRetroClient client;
 
-    String currentQuery;
+    private FilterWrapper filter;
+
+    private String currentQuery;
 
     // Store a member variable for the listener
     private EndlessRecyclerViewScrollListener scrollListener;
 
-    StaggeredGridLayoutManager gridLayoutManager =
-            new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+    private StaggeredGridLayoutManager gridLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +64,17 @@ public class SearchActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         setupViews();
 
+        checkNetworkInternetConnectivity();
+
         currentQuery = "";
     }
 
     private void setupViews() {
+
+        coordinatorLayout = (CoordinatorLayout)findViewById(R.id.coordinatorLayout);
+
+        gridLayoutManager =
+                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
         rvArticles = (RecyclerView) findViewById(R.id.rvResults);
 
@@ -98,14 +111,15 @@ public class SearchActivity extends AppCompatActivity
 
                 currentQuery = query;
 
-                //Only place to reset adapter and articles for the new query
-                //and reset the scroll listener state as this is a new query
-                articles.clear();
-                adapter.notifyDataSetChanged();
-                scrollListener.resetState();
+                if(checkNetworkInternetConnectivity()) {
+                    //Only place to reset adapter and articles for the new query
+                    //and reset the scroll listener state as this is a new query
+                    articles.clear();
+                    adapter.notifyDataSetChanged();
+                    scrollListener.resetState();
 
-                searchArticles(query,0);
-
+                    searchArticles(query, 0);
+                }
                 searchView.clearFocus();
                 return true;
             }
@@ -162,7 +176,9 @@ public class SearchActivity extends AppCompatActivity
     public void loadNextDataFromApi(int offset) {
 
         // API request to retrieve appropriate paginated data
-        searchArticles(currentQuery, offset);
+        if(checkNetworkInternetConnectivity()) {
+            searchArticles(currentQuery, offset);
+        }
 
     }
 
@@ -198,6 +214,31 @@ public class SearchActivity extends AppCompatActivity
             int curSize = adapter.getItemCount();
             adapter.notifyItemRangeInserted(curSize, articles.size() - 1);
         }
+    }
+
+
+    private boolean checkNetworkInternetConnectivity() {
+
+        boolean network = NetworkUtils.isNetworkAvailable(getBaseContext());
+
+        boolean internetAvailable = NetworkUtils.isOnline();
+
+        Snackbar snackbar = Snackbar
+                .make(coordinatorLayout, "No internet connection!", Snackbar.LENGTH_LONG)
+                .setAction("RETRY", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //TODO:
+                    }
+                });
+        snackbar.setActionTextColor(Color.RED);
+
+        if(!network || !internetAvailable) {
+            snackbar.show();
+            return false;
+        }
+
+        return true;
     }
 
 }
