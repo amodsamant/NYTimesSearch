@@ -57,6 +57,11 @@ public class ReadArticleActivity extends AppCompatActivity {
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
         builder.setActionButton(bitmap, "Share Link", pendingIntent, true);
+//        builder.setStartAnimations(this, android.R.anim.slide_in_right, R.anim.slide_out_left);
+        builder.setStartAnimations(this, android.R.anim.slide_in_left,
+                android.R.anim.slide_out_right);
+//        builder.setExitAnimations(this, android.R.anim.slide_out_right,
+//                android.R.anim.slide_in_left);
 
         CustomTabsIntent customTabsIntent = builder.build();
         customTabsIntent.launchUrl(this, Uri.parse(article.getWebUrl()));
@@ -76,7 +81,7 @@ public class ReadArticleActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        menu.clear();
+        
         getMenuInflater().inflate(R.menu.menu_read_article, menu);
 
         MenuItem item = menu.findItem(R.id.menu_item_share);

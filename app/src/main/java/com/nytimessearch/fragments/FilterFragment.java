@@ -74,24 +74,21 @@ public class FilterFragment extends DialogFragment {
         } else {
             tvBeginDate.setText(DateUtils.getCurrentDate());
         }
-        tvBeginDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        tvBeginDate.setOnClickListener(v -> {
 
-                // Get current date
-                Calendar cal = Calendar.getInstance(TimeZone.getDefault());
+            // Get current date
+            Calendar cal = Calendar.getInstance(TimeZone.getDefault());
 
-                // Create a date picker dialog
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
-                        R.style.AppTheme, datePickerListener,
-                        cal.get(Calendar.YEAR),
-                        cal.get(Calendar.MONTH),
-                        cal.get(Calendar.DAY_OF_MONTH));
+            // Create a date picker dialog
+            DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
+                    R.style.AppTheme, datePickerListener,
+                    cal.get(Calendar.YEAR),
+                    cal.get(Calendar.MONTH),
+                    cal.get(Calendar.DAY_OF_MONTH));
 
-                datePickerDialog.setCancelable(true);
-                datePickerDialog.setTitle("Select the Begin Date");
-                datePickerDialog.show();
-            }
+            datePickerDialog.setCancelable(true);
+            datePickerDialog.setTitle("Select the Begin Date");
+            datePickerDialog.show();
         });
 
         spSortOrder = (Spinner) view.findViewById(R.id.sp_sort_order);
@@ -113,19 +110,16 @@ public class FilterFragment extends DialogFragment {
         }
 
         btnSave = (Button) view.findViewById(R.id.btn_save);
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btnSave.setOnClickListener(v -> {
 
-                FilterDialogListener listener = (FilterDialogListener) getActivity();
-                listener.onFinishEditDialog(new FilterWrapper(tvBeginDate.getText().toString(),
-                        spSortOrder.getSelectedItem().toString(),
-                        cbArts.isChecked(),
-                        cbFashionStyle.isChecked(),
-                        cbSports.isChecked()));
-                Toast.makeText(getContext(),"SAVE!",Toast.LENGTH_SHORT).show();
-                dismiss();
-            }
+            FilterDialogListener listener = (FilterDialogListener) getActivity();
+            listener.onFinishEditDialog(new FilterWrapper(tvBeginDate.getText().toString(),
+                    spSortOrder.getSelectedItem().toString(),
+                    cbArts.isChecked(),
+                    cbFashionStyle.isChecked(),
+                    cbSports.isChecked()));
+            Toast.makeText(getContext(),"SAVE!",Toast.LENGTH_SHORT).show();
+            dismiss();
         });
     }
 

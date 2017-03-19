@@ -14,7 +14,6 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -226,11 +225,8 @@ public class SearchActivity extends AppCompatActivity
 
         Snackbar snackbar = Snackbar
                 .make(coordinatorLayout, "No internet connection!", Snackbar.LENGTH_LONG)
-                .setAction("RETRY", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        //TODO:
-                    }
+                .setAction("RETRY", view -> {
+                    //TODO:
                 });
         snackbar.setActionTextColor(Color.RED);
 

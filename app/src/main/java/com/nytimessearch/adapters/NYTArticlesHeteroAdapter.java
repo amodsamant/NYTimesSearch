@@ -11,12 +11,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.nytimessearch.R;
 import com.nytimessearch.ViewHolderImage;
 import com.nytimessearch.ViewHolderNoImage;
 import com.nytimessearch.activities.ReadArticleActivity;
 import com.nytimessearch.models.NYTArticle;
-import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
 
@@ -71,13 +71,10 @@ public class NYTArticlesHeteroAdapter extends RecyclerView.Adapter<RecyclerView.
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         final NYTArticle article = articles.get(position);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ReadArticleActivity.class);
-                intent.putExtra("article", Parcels.wrap(article));
-                v.getContext().startActivity(intent);
-            }
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), ReadArticleActivity.class);
+            intent.putExtra("article", Parcels.wrap(article));
+            v.getContext().startActivity(intent);
         });
 
         switch (holder.getItemViewType()) {
@@ -106,17 +103,12 @@ public class NYTArticlesHeteroAdapter extends RecyclerView.Adapter<RecyclerView.
     @Override
     public int getItemViewType(int position) {
 
-        if(articles.get(position) instanceof NYTArticle) {
-            NYTArticle article = (NYTArticle) articles.get(position);
-
-            if(article.getThumbnail()!=null && !article.getThumbnail().isEmpty()) {
-                return IMAGE;
-            } else {
-                return NO_IMAGE;
-            }
-
+        NYTArticle article =  articles.get(position);
+        if(article.getThumbnail()!=null && !article.getThumbnail().isEmpty()) {
+            return IMAGE;
+        } else {
+            return NO_IMAGE;
         }
-        return -1;
     }
 
 
@@ -132,11 +124,18 @@ public class NYTArticlesHeteroAdapter extends RecyclerView.Adapter<RecyclerView.
             ImageView ivThumbnail = viewHolderImage.ivThumbnail;
             ivThumbnail.setImageResource(0);
 //            if(!TextUtils.isEmpty(article.getThumbnail())) {
-            Picasso.with(getContext()).load(article.getThumbnail())
-                    .resize(width/3, height/3)
-                    .centerInside()
-                    .into(ivThumbnail);
+//            Picasso.with(getContext()).load(article.getThumbnail())
+//                    .resize(width/3, height/3)
+//                    .centerInside()
+//                    .into(ivThumbnail);
 //            }
+
+            Glide.with(getContext())
+                    .load(article.getThumbnail())
+                    .override(width/3, height/3)
+                    .fitCenter()
+                    .into(ivThumbnail);
+
 
             TextView tvHeadline = viewHolderImage.tvHeadline;
             tvHeadline.setText(article.getHeadline());
