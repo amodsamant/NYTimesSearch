@@ -67,6 +67,9 @@ public class SearchActivity extends AppCompatActivity
         checkNetworkInternetConnectivity();
 
         currentQuery = "";
+
+       searchArticles(currentQuery,0);
+
     }
 
     private void setupViews() {

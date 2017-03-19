@@ -23,7 +23,13 @@ public class NYTimesRetroClient {
 
         NYTArticeService service = retrofit.create(NYTArticeService.class);
 
-        Call<NYTArticleResponse> call = service.getArticles(API_KEY, query, offset);
+        Call<NYTArticleResponse> call = null;
+
+        if(query!=null && !query.isEmpty()) {
+            call = service.getArticles(API_KEY, query, offset);
+        } else {
+            call = service.getArticles(API_KEY, offset);
+        }
         return call;
     }
 
