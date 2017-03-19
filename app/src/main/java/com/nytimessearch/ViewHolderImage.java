@@ -8,11 +8,13 @@ import android.widget.TextView;
 public class ViewHolderImage extends RecyclerView.ViewHolder {
 
     public ImageView ivThumbnail;
+    public TextView tvTag;
     public TextView tvHeadline;
 
     public ViewHolderImage(View itemView) {
         super(itemView);
         ivThumbnail = (ImageView) itemView.findViewById(R.id.iv_thumbnail);
+        tvTag = (TextView) itemView.findViewById(R.id.tv_tag);
         tvHeadline = (TextView) itemView.findViewById(R.id.tv_headline);
     }
 

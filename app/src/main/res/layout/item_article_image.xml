@@ -12,10 +12,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@mipmap/ic_launcher"
-        android:scaleType="centerInside"
         android:layout_gravity="center"
         android:layout_margin="5dp"/>
 
+    <TextView
+        android:id="@+id/tv_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/tag_background"
+        android:textColor="@android:color/white"/>
+    
     <TextView
         android:id="@+id/tv_headline"
         android:layout_width="match_parent"

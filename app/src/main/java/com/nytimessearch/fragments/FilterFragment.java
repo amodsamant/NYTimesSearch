@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -90,6 +91,12 @@ public class FilterFragment extends DialogFragment {
 
             datePickerDialog.setCancelable(true);
             datePickerDialog.setTitle("Select the Begin Date");
+
+            Window window = datePickerDialog.getWindow();
+            window.setLayout(WindowManager.LayoutParams.WRAP_CONTENT,
+                    WindowManager.LayoutParams.WRAP_CONTENT);
+            window.setGravity(Gravity.CENTER);
+
             datePickerDialog.show();
         });
 

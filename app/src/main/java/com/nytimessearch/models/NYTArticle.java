@@ -17,6 +17,7 @@ public class NYTArticle {
     String source;
     String publishedDate;
     String thumbnail;
+    String section;
 
 
     public String getWebUrl() {
@@ -30,6 +31,8 @@ public class NYTArticle {
     public String getThumbnail() {
         return thumbnail;
     }
+
+    public String getSection() { return section; }
 
     public NYTArticle() {
 
@@ -48,6 +51,7 @@ public class NYTArticle {
             } else {
                 this.thumbnail = "";
             }
+
         } catch (JSONException e) {
 
         }
@@ -68,6 +72,10 @@ public class NYTArticle {
                 if (doc.getMultimedia() != null && !doc.getMultimedia().isEmpty()
                         && doc.getMultimedia().get(0) != null) {
                     article.thumbnail = "http://www.nytimes.com/" + doc.getMultimedia().get(0).getUrl();
+                }
+
+                if(doc.getSectionName() != null && !doc.getSectionName().isEmpty()) {
+                    article.section = "# " + doc.getSectionName() + " ";
                 }
 
                 articles.add(article);
