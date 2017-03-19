@@ -3,22 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:layout_margin="5dp"
+    android:background="@drawable/stag_grid_background">
 
     <TextView
         android:id="@+id/tv_headline_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:fontFamily="sans-serif-condensed"
-        android:textStyle="bold|italic"/>
+        android:fontFamily="serif"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:maxLines="3"
+        android:ellipsize="end"/>
 
     <TextView
         android:id="@+id/tv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:textSize="16sp"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:fontFamily="serif"/>
 
 
 </LinearLayout>

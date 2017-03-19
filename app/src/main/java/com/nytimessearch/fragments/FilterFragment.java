@@ -31,8 +31,6 @@ public class FilterFragment extends DialogFragment {
     private CheckBox cbSports;
     private Button btnSave;
 
-    //FilterWrapper filter;
-
     public interface FilterDialogListener {
         void onFinishEditDialog(FilterWrapper filter);
     }

@@ -68,7 +68,7 @@ public class SearchActivity extends AppCompatActivity
 
         currentQuery = "";
 
-        searchArticles(currentQuery,0);
+       searchArticles(currentQuery,0);
 
     }
 
