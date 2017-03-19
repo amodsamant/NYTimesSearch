@@ -2,6 +2,7 @@ package com.nytimessearch.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -13,8 +14,11 @@ import android.widget.TextView;
 import com.nytimessearch.R;
 import com.nytimessearch.ViewHolderImage;
 import com.nytimessearch.ViewHolderNoImage;
+import com.nytimessearch.activities.ReadArticleActivity;
 import com.nytimessearch.models.NYTArticle;
 import com.squareup.picasso.Picasso;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -65,6 +69,16 @@ public class NYTArticlesHeteroAdapter extends RecyclerView.Adapter<RecyclerView.
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+        final NYTArticle article = articles.get(position);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ReadArticleActivity.class);
+                intent.putExtra("article", Parcels.wrap(article));
+                v.getContext().startActivity(intent);
+            }
+        });
 
         switch (holder.getItemViewType()) {
 

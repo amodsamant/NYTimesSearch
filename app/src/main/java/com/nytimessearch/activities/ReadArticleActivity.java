@@ -11,12 +11,14 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.nytimessearch.R;
+import com.nytimessearch.models.NYTArticle;
+
+import org.parceler.Parcels;
 
 public class ReadArticleActivity extends AppCompatActivity {
 
-    String url;
-
-    WebView webView;
+    private NYTArticle article;
+    private WebView webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +27,7 @@ public class ReadArticleActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        url = getIntent().getStringExtra("url");
+        article = (NYTArticle) Parcels.unwrap(getIntent().getParcelableExtra("article"));
         webView = (WebView) findViewById(R.id.web_view);
 
         webView.getSettings().setLoadsImagesAutomatically(true);
@@ -34,9 +36,9 @@ public class ReadArticleActivity extends AppCompatActivity {
         // Configure the client to use when opening URLs
         webView.setWebViewClient(new MyBrowser());
         // Load the initial URL
-        webView.loadUrl(url);
+        webView.loadUrl(article.getWebUrl());
 
-        getSupportActionBar().setTitle(url);
+        getSupportActionBar().setTitle(article.getWebUrl());
     }
 
     // Manages the behavior when URLs are loaded
