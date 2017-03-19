@@ -52,7 +52,7 @@ public class NYTArticlesAdapter extends RecyclerView.Adapter<NYTArticlesAdapter.
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        View articleView = inflater.inflate(R.layout.item_article_result, parent, false);
+        View articleView = inflater.inflate(R.layout.item_article_image, parent, false);
         return new ViewHolder(articleView);
     }
 

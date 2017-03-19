@@ -20,7 +20,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nytimessearch.EndlessRecyclerViewScrollListener;
 import com.nytimessearch.R;
-import com.nytimessearch.adapters.NYTArticlesAdapter;
+import com.nytimessearch.adapters.NYTArticlesHeteroAdapter;
 import com.nytimessearch.fragments.FilterFragment;
 import com.nytimessearch.models.FilterWrapper;
 import com.nytimessearch.models.NYTArticle;
@@ -43,7 +43,8 @@ public class SearchActivity extends AppCompatActivity
     private RecyclerView rvArticles;
 
     private List<NYTArticle> articles;
-    private NYTArticlesAdapter adapter;
+    //private NYTArticlesAdapter adapter;
+    private NYTArticlesHeteroAdapter adapter;
 
     private NYTimesRetroClient client;
 
@@ -79,7 +80,7 @@ public class SearchActivity extends AppCompatActivity
         rvArticles = (RecyclerView) findViewById(R.id.rvResults);
 
         articles = new ArrayList<>();
-        adapter = new NYTArticlesAdapter(this, articles);
+        adapter = new NYTArticlesHeteroAdapter(this, articles);
         rvArticles.setAdapter(adapter);
 
         // Attach the layout manager to the recycler view
