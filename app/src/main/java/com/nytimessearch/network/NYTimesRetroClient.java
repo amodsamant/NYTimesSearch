@@ -86,33 +86,5 @@ public class NYTimesRetroClient {
 
         return newsDesk;
     }
-    // fq=news_desk:("Education"%20"Health")
-
-
-//    public List<NYTArticle> searchArticles() {
-//        NYTArticeService service = retrofit.create(NYTArticeService.class);
-//
-//        Call<NYTArticleResponse> call = service.getArticles(API_KEY);
-//
-//
-//        call.enqueue(new Callback<NYTArticleResponse>() {
-//            @Override
-//            public void onResponse(Call<NYTArticleResponse> call,
-//                                   Response<NYTArticleResponse> response) {
-//                NYTArticle.getArticlesFromJson(response.toString());
-//                //articles.addAll(NYTArticle.getArticlesFromJson(response.toString()));
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<NYTArticleResponse> call, Throwable t) {
-//                call.isCanceled();
-//                //TODO: Handle this
-//            }
-//        });
-//        return new ArrayList<>();
-//    }
-
-
 
 }

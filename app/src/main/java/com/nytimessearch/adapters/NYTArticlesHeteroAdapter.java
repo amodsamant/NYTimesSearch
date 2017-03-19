@@ -111,9 +111,8 @@ public class NYTArticlesHeteroAdapter extends RecyclerView.Adapter<RecyclerView.
         }
     }
 
-
     private void configureViewHolderImage(ViewHolderImage viewHolderImage, int position) {
-        NYTArticle article = (NYTArticle) articles.get(position);
+        NYTArticle article = articles.get(position);
         if(article!=null) {
 
             ((Activity) getContext()).getWindowManager()
@@ -123,12 +122,6 @@ public class NYTArticlesHeteroAdapter extends RecyclerView.Adapter<RecyclerView.
 
             ImageView ivThumbnail = viewHolderImage.ivThumbnail;
             ivThumbnail.setImageResource(0);
-//            if(!TextUtils.isEmpty(article.getThumbnail())) {
-//            Picasso.with(getContext()).load(article.getThumbnail())
-//                    .resize(width/3, height/3)
-//                    .centerInside()
-//                    .into(ivThumbnail);
-//            }
 
             Glide.with(getContext())
                     .load(article.getThumbnail())
@@ -144,7 +137,7 @@ public class NYTArticlesHeteroAdapter extends RecyclerView.Adapter<RecyclerView.
 
     private void configureViewHolderNoImage(ViewHolderNoImage viewHolderNoImage, int position) {
 
-        NYTArticle article = (NYTArticle) articles.get(position);
+        NYTArticle article = articles.get(position);
 
         if(article!=null) {
 

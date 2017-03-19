@@ -42,7 +42,7 @@ public class SearchActivity extends AppCompatActivity
     private RecyclerView rvArticles;
 
     private List<NYTArticle> articles;
-    //private NYTArticlesAdapter adapter;
+
     private NYTArticlesHeteroAdapter adapter;
 
     private NYTimesRetroClient client;
@@ -68,7 +68,7 @@ public class SearchActivity extends AppCompatActivity
 
         currentQuery = "";
 
-       searchArticles(currentQuery,0);
+        searchArticles(currentQuery,0);
 
     }
 

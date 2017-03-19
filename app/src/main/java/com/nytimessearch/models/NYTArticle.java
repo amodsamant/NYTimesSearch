@@ -57,9 +57,6 @@ public class NYTArticle {
 
         List<NYTArticle> articles = new ArrayList<>();
 
-//        Gson gson = new GsonBuilder().create();
-//
-//        NYTArticleResponse articleResponse = gson.fromJson(response, NYTArticleResponse.class);
         if(articleResponse!=null && articleResponse.getResponse()!=null) {
             List<Doc> docs = articleResponse.getResponse().getDocs();
             for (Doc doc : docs) {
@@ -83,17 +80,17 @@ public class NYTArticle {
         return articles;
     }
 
-    public static List<NYTArticle> fromJSONArray(JSONArray articlesJson) {
-
-        List<NYTArticle> articles = new ArrayList<>();
-        for(int x = 0; x < articlesJson.length(); x++) {
-            try {
-                articles.add(new NYTArticle(articlesJson.getJSONObject(x)));
-            } catch (JSONException e) {
-
-            }
-        }
-
-        return articles;
-    }
+//    public static List<NYTArticle> fromJSONArray(JSONArray articlesJson) {
+//
+//        List<NYTArticle> articles = new ArrayList<>();
+//        for(int x = 0; x < articlesJson.length(); x++) {
+//            try {
+//                articles.add(new NYTArticle(articlesJson.getJSONObject(x)));
+//            } catch (JSONException e) {
+//
+//            }
+//        }
+//
+//        return articles;
+//    }
 }

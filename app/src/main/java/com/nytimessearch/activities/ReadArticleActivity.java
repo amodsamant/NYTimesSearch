@@ -38,7 +38,7 @@ public class ReadArticleActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        article = (NYTArticle) Parcels.unwrap(getIntent().getParcelableExtra("article"));
+        article = Parcels.unwrap(getIntent().getParcelableExtra("article"));
 
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
         builder.setToolbarColor(ContextCompat.getColor(this,R.color.colorAccent));
@@ -57,11 +57,8 @@ public class ReadArticleActivity extends AppCompatActivity {
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
         builder.setActionButton(bitmap, "Share Link", pendingIntent, true);
-//        builder.setStartAnimations(this, android.R.anim.slide_in_right, R.anim.slide_out_left);
         builder.setStartAnimations(this, android.R.anim.slide_in_left,
                 android.R.anim.slide_out_right);
-//        builder.setExitAnimations(this, android.R.anim.slide_out_right,
-//                android.R.anim.slide_in_left);
 
         CustomTabsIntent customTabsIntent = builder.build();
         customTabsIntent.launchUrl(this, Uri.parse(article.getWebUrl()));

@@ -31,7 +31,7 @@ public class FilterFragment extends DialogFragment {
     private CheckBox cbSports;
     private Button btnSave;
 
-    FilterWrapper filter;
+    //FilterWrapper filter;
 
     public interface FilterDialogListener {
         void onFinishEditDialog(FilterWrapper filter);
@@ -141,7 +141,7 @@ public class FilterFragment extends DialogFragment {
         for (int i = 0; i < adapter.getCount(); i++) {
             if (adapter.getItem(i).equals(value)) {
                 index = i;
-                break; // terminate loop
+                break;
             }
         }
         spinner.setSelection(index);
