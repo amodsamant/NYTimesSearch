@@ -1,12 +1,16 @@
 package com.nytimessearch.fragments;
 
 import android.app.DatePickerDialog;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -145,4 +149,24 @@ public class FilterFragment extends DialogFragment {
         spinner.setSelection(index);
     }
 
+
+    @Override
+    public void onResume() {
+//        DisplayMetrics dm = new DisplayMetrics();
+//        int width = getResources().
+//        int height = getResources().getDimensionPixelSize(R.dimen.popup_height);
+//        getDialog().getWindow().setLayout(width, height);
+
+        // Store access variables for window and blank point
+        Window window = getDialog().getWindow();
+        Point size = new Point();
+        // Store dimensions of the screen in `size`
+        Display display = window.getWindowManager().getDefaultDisplay();
+        display.getSize(size);
+        window.setLayout((int) (size.x * 0.6), (int) (size.x * 0.9));//WindowManager.LayoutParams.MATCH_PARENT);
+        window.setGravity(Gravity.CENTER);
+        // Call super onResume after sizing
+        super.onResume();
+
+    }
 }

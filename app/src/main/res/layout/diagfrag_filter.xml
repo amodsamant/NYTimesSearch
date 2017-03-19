@@ -1,66 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <LinearLayout
-        android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="5dp"
-        android:gravity="center">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:gravity="center">
 
-        <TextView
-            android:id="@+id/tv_begin_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/tv_begin_date" />
+    <TextView
+        android:id="@+id/tv_begin_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/tv_begin_date"
+        android:textColor="@color/colorAccent"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:layout_marginBottom="10dp"/>
 
-        <TextView
-            android:id="@+id/tv_begin_date_value"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="date" />
+    <TextView
+        android:id="@+id/tv_begin_date_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:fontFamily="serif"
+        android:gravity="center_vertical|center_horizontal"
+        android:inputType="date"
+        android:textSize="16dp"/>
 
-        <TextView
-            android:id="@+id/tv_sort_order"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/tv_sort_order" />
+    <TextView
+        android:id="@+id/tv_sort_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/tv_sort_order"
+        android:textColor="@color/colorAccent"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"/>
 
-        <Spinner
-            android:id="@+id/sp_sort_order"
-            android:layout_width="wrap_content"
-            android:entries="@array/sort_order"
-            android:layout_height="wrap_content" />
+    <Spinner
+        android:id="@+id/sp_sort_order"
+        android:layout_width="wrap_content"
+        android:entries="@array/sort_order"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:layout_marginBottom="10dp"/>
 
-        <TextView
-            android:id="@+id/tv_news_desk"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/tv_news_desk" />
+    <TextView
+        android:id="@+id/tv_news_desk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/tv_news_desk"
+        android:textColor="@color/colorAccent"
+        android:textSize="18dp"
+        android:textStyle="bold" />
 
-        <CheckBox
-            android:id="@+id/cb_arts"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/arts" />
+    <CheckBox
+        android:id="@+id/cb_arts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:text="@string/arts"
+        android:layout_marginLeft="@dimen/fab_margin"/>
 
-        <CheckBox
-            android:id="@+id/cb_fashion_style"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/fashion_style" />
+    <CheckBox
+        android:id="@+id/cb_fashion_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/fashion_style"
+        android:fontFamily="serif"
+        android:layout_marginLeft="@dimen/fab_margin"/>
 
-        <CheckBox
-            android:id="@+id/cb_sports"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/sports" />
+    <CheckBox
+        android:id="@+id/cb_sports"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sports"
+        android:fontFamily="serif"
+        android:layout_marginLeft="@dimen/fab_margin"/>
 
-        <Button
-            android:id="@+id/btn_save"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_filter"/>
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_filter"
+        android:fontFamily="serif"/>
 
-
-    </LinearLayout>
-</layout>
+</LinearLayout>

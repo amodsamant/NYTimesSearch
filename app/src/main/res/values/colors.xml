@@ -3,4 +3,5 @@
     <color name="colorPrimary">#6E0A53</color>
     <color name="colorPrimaryDark">#5E0A48</color>
     <color name="colorAccent">#AA0055</color>
+    <color name="gridBorder">#e4e4e4</color>
 </resources>
