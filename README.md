@@ -53,6 +53,7 @@ The following **additional** features are implemented:
 Here's a walkthrough of implemented user stories:
 [Link to Video Walkthrough](https://www.dropbox.com/s/es6u5rliror744n/NYTSearch.mp4?dl=0)
 
+Additional screenshot:
 Another image not captured in the walkthrough is a snackbar when no results are returned
 https://www.dropbox.com/s/lwho1xo3wrnp7ef/NoResultsSnackbar.png
 
