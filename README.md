@@ -54,7 +54,7 @@ Here's a walkthrough of implemented user stories:
 [Link to Video Walkthrough](https://www.dropbox.com/s/es6u5rliror744n/NYTSearch.mp4?dl=0)
 
 Another image not captured in the walkthrough is a snackbar when no results are returned
-<img src='https://www.dropbox.com/s/lwho1xo3wrnp7ef/NoResultsSnackbar.png?dl=0' title='Another example of Snackbar' width='' alt='Snacbar example from app'/>
+<img src='https://www.dropbox.com/s/lwho1xo3wrnp7ef/NoResultsSnackbar.png' title='Another example of Snackbar' width='600' alt='Snacbar example from app'/>
 
 
 ## Notes
