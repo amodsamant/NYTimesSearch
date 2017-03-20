@@ -1,87 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dp"
-    android:gravity="center_vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <LinearLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        android:gravity="center_vertical">
 
-    <TextView
-        android:id="@+id/tv_begin_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="serif"
-        android:text="@string/tv_begin_date"
-        android:textColor="@color/colorAccent"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        android:layout_marginBottom="10dp"/>
+        <TextView
+            android:id="@+id/tv_begin_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:text="@string/tv_begin_date"
+            android:textColor="@color/colorAccent"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:layout_marginBottom="10dp"/>
 
-    <TextView
-        android:id="@+id/tv_begin_date_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:fontFamily="serif"
-        android:inputType="date"
-        android:textSize="16dp"
-        android:hint="Click to set..."/>
+        <TextView
+            android:id="@+id/tv_begin_date_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:fontFamily="serif"
+            android:inputType="date"
+            android:textSize="16dp"
+            android:hint="Click to set..."/>
 
-    <TextView
-        android:id="@+id/tv_sort_order"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="serif"
-        android:text="@string/tv_sort_order"
-        android:textColor="@color/colorAccent"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="5dp"/>
+        <TextView
+            android:id="@+id/tv_sort_order"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:text="@string/tv_sort_order"
+            android:textColor="@color/colorAccent"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"/>
 
-    <Spinner
-        android:id="@+id/sp_sort_order"
-        android:layout_width="wrap_content"
-        android:entries="@array/sort_order"
-        android:layout_height="wrap_content"
-        android:fontFamily="serif"
-        android:layout_marginBottom="10dp"/>
+        <Spinner
+            android:id="@+id/sp_sort_order"
+            android:layout_width="wrap_content"
+            android:entries="@array/sort_order"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:layout_marginBottom="10dp"/>
 
-    <TextView
-        android:id="@+id/tv_news_desk"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="serif"
-        android:text="@string/tv_news_desk"
-        android:textColor="@color/colorAccent"
-        android:textSize="18dp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tv_news_desk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:text="@string/tv_news_desk"
+            android:textColor="@color/colorAccent"
+            android:textSize="18dp"
+            android:textStyle="bold" />
 
-    <CheckBox
-        android:id="@+id/cb_arts"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="serif"
-        android:text="@string/arts"/>
+        <CheckBox
+            android:id="@+id/cb_arts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:text="@string/arts"/>
 
-    <CheckBox
-        android:id="@+id/cb_fashion_style"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/fashion_style"
-        android:fontFamily="serif"/>
+        <CheckBox
+            android:id="@+id/cb_fashion_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/fashion_style"
+            android:fontFamily="serif"/>
 
-    <CheckBox
-        android:id="@+id/cb_sports"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/sports"
-        android:fontFamily="serif"/>
+        <CheckBox
+            android:id="@+id/cb_sports"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sports"
+            android:fontFamily="serif"/>
 
-    <Button
-        android:id="@+id/btn_save"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_filter"
-        android:fontFamily="serif"/>
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_filter"
+            android:fontFamily="serif"/>
 
-</LinearLayout>
+    </LinearLayout>
+</layout>

@@ -1,6 +1,7 @@
 package com.nytimessearch.fragments;
 
 import android.app.DatePickerDialog;
+import android.databinding.DataBindingUtil;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,14 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
-import android.widget.TextView;
 
 import com.nytimessearch.R;
+import com.nytimessearch.databinding.DiagfragFilterBinding;
 import com.nytimessearch.models.FilterWrapper;
 import com.nytimessearch.utils.DateUtils;
 
@@ -32,12 +31,8 @@ import java.util.TimeZone;
  */
 public class FilterFragment extends DialogFragment {
 
-    private TextView tvBeginDate;
-    private Spinner spSortOrder;
-    private CheckBox cbArts;
-    private CheckBox cbFashionStyle;
-    private CheckBox cbSports;
-    private Button btnSave;
+    //Store the binding
+    private DiagfragFilterBinding binding;
 
     public interface FilterDialogListener {
         void onFinishEditDialog(FilterWrapper filter);
@@ -64,21 +59,20 @@ public class FilterFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.diagfrag_filter, container, false);
+        binding = DataBindingUtil.inflate(inflater,R.layout.diagfrag_filter,container,false);
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        tvBeginDate = (TextView) view.findViewById(R.id.tv_begin_date_value);
         if(getArguments().getString("beginDate")!=null &&
                 !getArguments().getString("beginDate").isEmpty()) {
-            tvBeginDate.setText(getArguments().getString("beginDate"));
+            binding.tvBeginDateValue.setText(getArguments().getString("beginDate"));
         }
 
-        //DatePickerDialog for setting the date
-        tvBeginDate.setOnClickListener(v -> {
+        binding.tvBeginDateValue.setOnClickListener(v -> {
             // Get current date
             Calendar cal = Calendar.getInstance(TimeZone.getDefault());
             // Create a date picker dialog
@@ -97,32 +91,28 @@ public class FilterFragment extends DialogFragment {
             datePickerDialog.show();
         });
 
-        spSortOrder = (Spinner) view.findViewById(R.id.sp_sort_order);
         if(getArguments().getString("sort")!=null) {
-            setSpinnerToValue(spSortOrder,getArguments().getString("sort"));
+            setSpinnerToValue(binding.spSortOrder,getArguments().getString("sort"));
         }
 
-        cbArts = (CheckBox) view.findViewById(R.id.cb_arts);
         if(getArguments().getBoolean("arts")) {
-            cbArts.setChecked(true);
+            binding.cbArts.setChecked(true);
         }
-        cbFashionStyle = (CheckBox) view.findViewById(R.id.cb_fashion_style);
         if(getArguments().getBoolean("fashionStyle")) {
-            cbFashionStyle.setChecked(true);
+            binding.cbFashionStyle.setChecked(true);
         }
-        cbSports = (CheckBox) view.findViewById(R.id.cb_sports);
         if(getArguments().getBoolean("sports")) {
-            cbSports.setChecked(true);
+            binding.cbSports.setChecked(true);
         }
 
-        btnSave = (Button) view.findViewById(R.id.btn_save);
-        btnSave.setOnClickListener(v -> {
+        binding.btnSave.setOnClickListener(v -> {
             FilterDialogListener listener = (FilterDialogListener) getActivity();
-            listener.onFinishEditDialog(new FilterWrapper(tvBeginDate.getText().toString(),
-                    spSortOrder.getSelectedItem().toString(),
-                    cbArts.isChecked(),
-                    cbFashionStyle.isChecked(),
-                    cbSports.isChecked()));
+            listener.onFinishEditDialog(new FilterWrapper(
+                    binding.tvBeginDateValue.getText().toString(),
+                    binding.spSortOrder.getSelectedItem().toString(),
+                    binding.cbArts.isChecked(),
+                    binding.cbFashionStyle.isChecked(),
+                    binding.cbSports.isChecked()));
             dismiss();
         });
     }
@@ -133,7 +123,7 @@ public class FilterFragment extends DialogFragment {
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                     String beginDate = DateUtils.createBeginDateString(year, dayOfMonth, month);
-                    tvBeginDate.setText(beginDate);
+                    binding.tvBeginDateValue.setText(beginDate);
                 }
             };
 
