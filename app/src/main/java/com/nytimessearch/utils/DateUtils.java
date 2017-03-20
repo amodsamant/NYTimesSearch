@@ -8,27 +8,18 @@ import java.util.Date;
 public class DateUtils {
 
     static DateFormat mmDDYYYYDateFormat = new SimpleDateFormat("MM/dd/yyyy");
-
     static SimpleDateFormat yyyyMMddFormat = new SimpleDateFormat("yyyyMMdd");
 
-    public static String getCurrentDate() {
-
-        Date date = new Date();
-        return mmDDYYYYDateFormat.format(date);
-    }
-
-    public static String getYYYYMMddFormatDate(String dateStr) {
+   public static String getYYYYMMddFormatDate(String dateStr) {
 
         Date date = null;
         try {
             date = mmDDYYYYDateFormat.parse(dateStr);
             return yyyyMMddFormat.format(date);
         } catch (ParseException e) {
-            //TODO: Handle
-            e.printStackTrace();
+            // If this is unable to parse then no date will be shown
         }
         return null;
-
     }
 
     /**

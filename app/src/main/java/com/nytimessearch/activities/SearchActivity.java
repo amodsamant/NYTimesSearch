@@ -275,7 +275,6 @@ public class SearchActivity extends AppCompatActivity
                 Snackbar snackbar = Snackbar
                         .make(coordinatorLayout, "Error retrieving results!", Snackbar.LENGTH_LONG)
                         .setAction("RETRY", view -> {
-                            //TODO:
                         });
                 snackbar.setActionTextColor(Color.RED);
             }
@@ -307,7 +306,7 @@ public class SearchActivity extends AppCompatActivity
             Snackbar snackbar = Snackbar
                     .make(coordinatorLayout, "No internet connection!", Snackbar.LENGTH_LONG)
                     .setAction("RETRY", view -> {
-                        //TODO:
+
                     });
             snackbar.setActionTextColor(Color.RED);
 
