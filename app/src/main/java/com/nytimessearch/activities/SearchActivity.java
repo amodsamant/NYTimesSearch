@@ -273,10 +273,12 @@ public class SearchActivity extends AppCompatActivity
 
             } catch (IOException e) {
                 Snackbar snackbar = Snackbar
-                        .make(coordinatorLayout, "Error retrieving results!", Snackbar.LENGTH_LONG)
+                        .make(coordinatorLayout, "Error retrieving results! Please try again",
+                                Snackbar.LENGTH_LONG)
                         .setAction("RETRY", view -> {
                         });
                 snackbar.setActionTextColor(Color.RED);
+                snackbar.show();
             }
             return null;
         }
@@ -284,9 +286,16 @@ public class SearchActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(NYTArticleResponse response) {
             List<NYTArticle> nytArticles = NYTArticle.getArticlesFromJson(response);
-            articles.addAll(nytArticles);
-            int curSize = adapter.getItemCount();
-            adapter.notifyItemRangeInserted(curSize, articles.size() - 1);
+            if(nytArticles==null || nytArticles.isEmpty()) {
+                Snackbar snackbar = Snackbar
+                        .make(coordinatorLayout, "No articles matched! Try different?",
+                                Snackbar.LENGTH_LONG);
+                snackbar.show();
+            } else {
+                articles.addAll(nytArticles);
+                int curSize = adapter.getItemCount();
+                adapter.notifyItemRangeInserted(curSize, articles.size() - 1);
+            }
         }
     }
 
