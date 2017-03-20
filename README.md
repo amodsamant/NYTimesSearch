@@ -40,8 +40,7 @@ The following **bonus** features are implemented:
 
 The following **additional** features are implemented:
 
-* [x] User can change the grid by clicking the menu item besides the filter item.This provides better functionality for the user. 
-      Different images are selected in each of the view as provided by the API. Example, span count 1 uses wide image, span count2 uses thumbnail
+* [x] User can change the grid by clicking the menu item besides the filter item.This provides better functionality for the user. Different images are selected in each of the view as provided by the API. Example, span count 1 uses wide image, span count 2 uses thumbnail
 * [x] Added a TAG for every view which shows the News Desk value if present else uses Section Name
 * [x] Added published date in the view
 * [x] Date picker does allow you to set a begin date from than the current date
