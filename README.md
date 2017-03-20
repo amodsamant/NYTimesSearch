@@ -43,8 +43,8 @@ The following **additional** features are implemented:
 * [x] User can change the grid by clicking the menu item besides the filter item.This provides better functionality for the user. Different images are selected in each of the view as provided by the API. Example, span count 1 uses wide image, span count 2 uses thumbnail
 * [x] Added a TAG for every view which shows the News Desk value if present else uses Section Name
 * [x] Added published date in the view for user to understand what date the article was published
-* [x] Date picker does allow you to set a begin date from than the current date
-* [x] Splash Activity shows the logo at the start
+* [x] Date picker does not allow you to set a begin date from than the current date
+* [x] Splash Activity is added
 * [x] Added Snackbar for no internet connection
 
 
