@@ -18,6 +18,9 @@ import com.nytimessearch.utils.GenericUtils;
 
 import java.util.List;
 
+/**
+ * Recycler view adapter using the StagerredGrid layout
+ */
 public class NYTArticlesHeteroAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private List<NYTArticle> articles;
@@ -51,7 +54,6 @@ public class NYTArticlesHeteroAdapter extends RecyclerView.Adapter<RecyclerView.
                 viewHolder = new ViewHolderNoImage(noImView);
                 break;
             default:
-                //TODO:
         }
         return viewHolder;
     }
@@ -61,6 +63,8 @@ public class NYTArticlesHeteroAdapter extends RecyclerView.Adapter<RecyclerView.
 
         final NYTArticle article = articles.get(position);
         holder.itemView.setOnClickListener(v -> {
+
+            //Custom chrome tab
             ChromeCustomTabsHelper helper = new ChromeCustomTabsHelper(v.getContext());
             helper.openChromeTab(article);
         });
@@ -94,6 +98,11 @@ public class NYTArticlesHeteroAdapter extends RecyclerView.Adapter<RecyclerView.
         }
     }
 
+    /**
+     * Function configures the view holder with the appropriate layout
+     * @param viewHolderImage
+     * @param position
+     */
     private void configureViewHolderImage(ViewHolderImage viewHolderImage, int position) {
         NYTArticle article = articles.get(position);
         if(article!=null) {
@@ -144,6 +153,12 @@ public class NYTArticlesHeteroAdapter extends RecyclerView.Adapter<RecyclerView.
         }
     }
 
+    /**
+     * Function configures the view holder with the appropriate layout
+     *
+     * @param viewHolderNoImage
+     * @param position
+     */
     private void configureViewHolderNoImage(ViewHolderNoImage viewHolderNoImage, int position) {
 
         NYTArticle article = articles.get(position);

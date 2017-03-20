@@ -6,6 +6,9 @@ import android.widget.TextView;
 
 import com.nytimessearch.R;
 
+/**
+ * ViewHolder for view with no image
+ */
 public class ViewHolderNoImage extends RecyclerView.ViewHolder {
 
     public TextView tvTag;

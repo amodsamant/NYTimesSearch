@@ -40,10 +40,13 @@ public class NYTArticle {
 
     public String getSnippet() {return snippet;}
 
-    public NYTArticle() {
+    public NYTArticle() {}
 
-    }
-
+    /**
+     * Creates a list of {@link NYTArticle} from the {@link NYTArticleResponse} provided
+     * @param articleResponse
+     * @return
+     */
     public static List<NYTArticle> getArticlesFromJson(NYTArticleResponse articleResponse){
 
         List<NYTArticle> articles = new ArrayList<>();
@@ -92,8 +95,6 @@ public class NYTArticle {
 
                 articles.add(article);
             }
-        } else {
-            //TODO: Log error
         }
         return articles;
     }

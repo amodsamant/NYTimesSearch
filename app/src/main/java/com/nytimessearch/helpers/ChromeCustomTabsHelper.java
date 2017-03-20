@@ -13,6 +13,9 @@ import android.support.v4.content.ContextCompat;
 import com.nytimessearch.R;
 import com.nytimessearch.models.NYTArticle;
 
+/**
+ * ChromeCustomTabsHelper used to create custom chrome tab
+ */
 public class ChromeCustomTabsHelper {
 
     private Context mContext;

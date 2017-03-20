@@ -10,22 +10,32 @@ import retrofit2.Call;
 import static com.nytimessearch.interfaces.NYTArticleService.retrofit;
 
 public class NYTimesRetroClient {
-    // dac417bd142940b1ae1ff7a36261426f
-    // ae0446ab51eb416c9aa42ee2bb4ec024
-    // 227c750bb7714fc39ef1559ef1bd8329
+
     private final String API_KEY = "ae0446ab51eb416c9aa42ee2bb4ec024";
 
     public NYTimesRetroClient() {
     }
 
+    /**
+     * Gets the call object when filter is not set
+     * @param query
+     * @param offset
+     * @return
+     */
     public Call<NYTArticleResponse> getCaller(String query, int offset) {
         NYTArticleService service = retrofit.create(NYTArticleService.class);
         return service.getArticles(API_KEY, query, offset);
     }
 
+    /**
+     * Gets the Call object when filter is set
+     * @param query
+     * @param filter
+     * @param offset
+     * @return
+     */
     public Call<NYTArticleResponse> getCallerWithFilter(String query, FilterWrapper filter,
                                                         int offset) {
-
         NYTArticleService service = retrofit.create(NYTArticleService.class);
 
         Call<NYTArticleResponse> call = null;
@@ -41,29 +51,29 @@ public class NYTimesRetroClient {
         return call;
     }
 
+    /**
+     * Function builds the new desk string in the required format by the API
+     * @param filter
+     * @return
+     */
     private String buildNewsDesk(FilterWrapper filter) {
 
         String values = "";
-
         if(filter.isArts()) {
             values = values + filter.getArts();
         }
-
         if(filter.isFashionStyle()) {
             if(filter.isArts()) {
                 values = values + "%20";
             }
             values = values + filter.getFashionStyle();
         }
-
         if(filter.isSports()) {
             if(filter.isArts() || filter.isFashionStyle()) {
                 values = values + "%20";
             }
             values = values + filter.getSports();
         }
-
         return "news_desk:(" + values+ ")";
     }
-
 }

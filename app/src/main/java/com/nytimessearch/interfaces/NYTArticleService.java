@@ -8,6 +8,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
+/**
+ * Interfface defines the APIs used to call NewYork Times Aricles search
+ * using Retrofit networking library
+ */
 public interface NYTArticleService {
     @GET("articlesearch.json")
     public Call<NYTArticleResponse> getArticles(@Query("api-key") String apiKey,
@@ -30,7 +34,6 @@ public interface NYTArticleService {
                                                            @Query("page") int page);
 
     public final String API_BASE_URL = "https://api.nytimes.com/svc/search/v2/";
-
     public static final Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())

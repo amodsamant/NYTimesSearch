@@ -7,6 +7,9 @@ import android.widget.TextView;
 
 import com.nytimessearch.R;
 
+/**
+ * ViewHolder for view with an image
+ */
 public class ViewHolderImage extends RecyclerView.ViewHolder {
 
     public ImageView ivThumbnail;

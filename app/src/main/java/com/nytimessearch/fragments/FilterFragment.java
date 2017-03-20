@@ -26,6 +26,10 @@ import com.nytimessearch.utils.DateUtils;
 import java.util.Calendar;
 import java.util.TimeZone;
 
+/**
+ * Modal overlay for setting filters
+ *
+ */
 public class FilterFragment extends DialogFragment {
 
     private TextView tvBeginDate;
@@ -39,14 +43,11 @@ public class FilterFragment extends DialogFragment {
         void onFinishEditDialog(FilterWrapper filter);
     }
 
-    public FilterFragment() {
+    public FilterFragment() {}
 
-    }
-
+    // Function to create new instance of fragment
     public static FilterFragment newInstance(FilterWrapper filter) {
-
         FilterFragment frag = new FilterFragment();
-
         Bundle args = new Bundle();
         if(filter != null) {
             args.putString("beginDate", filter.getBeginDate());
@@ -76,8 +77,8 @@ public class FilterFragment extends DialogFragment {
             tvBeginDate.setText(getArguments().getString("beginDate"));
         }
 
+        //DatePickerDialog for setting the date
         tvBeginDate.setOnClickListener(v -> {
-
             // Get current date
             Calendar cal = Calendar.getInstance(TimeZone.getDefault());
             // Create a date picker dialog
@@ -126,6 +127,7 @@ public class FilterFragment extends DialogFragment {
         });
     }
 
+    // Date picker listener to get the date in appropriate format
     private DatePickerDialog.OnDateSetListener datePickerListener =
             new DatePickerDialog.OnDateSetListener() {
                 @Override
@@ -135,7 +137,11 @@ public class FilterFragment extends DialogFragment {
                 }
             };
 
-
+    /**
+     * Set the spinner to its appropriate value when opening the filter modal overlay again
+     * @param spinner
+     * @param value
+     */
     public void setSpinnerToValue(Spinner spinner, String value) {
         int index = 0;
         SpinnerAdapter adapter = spinner.getAdapter();
@@ -148,7 +154,9 @@ public class FilterFragment extends DialogFragment {
         spinner.setSelection(index);
     }
 
-
+    /**
+     * Display the filter dialog with correct dimensions
+     */
     @Override
     public void onResume() {
         Window window = getDialog().getWindow();
@@ -159,6 +167,5 @@ public class FilterFragment extends DialogFragment {
         window.setGravity(Gravity.CENTER);
         // Calling super onResume after sizing
         super.onResume();
-
     }
 }
