@@ -30,7 +30,7 @@ The following **bonus** features are implemented:
 * [x] Use the [RecyclerView](http://guides.codepath.com/android/Using-the-RecyclerView) with the `StaggeredGridLayoutManager` to display improve the grid of image results
 * [x] For different news articles that only have text or only have images, use [Heterogenous Layouts](http://guides.codepath.com/android/Heterogenous-Layouts-inside-RecyclerView) with RecyclerView
 * [x] (This was later removed as Chrome Custom tabs story makes it redundant)Use Parcelable instead of Serializable using the popular [Parceler library](http://guides.codepath.com/android/Using-Parceler).
-* [x] Leverages the [data binding support module](http://guides.codepath.com/android/Applying-Data-Binding-for-Views) to bind data into layout templates.(Added this in FilterFragment and diagfrag_filter.xml)
+* [x] Leverages the [data binding support module](http://guides.codepath.com/android/Applying-Data-Binding-for-Views) to bind data into layout templates.(Added this only in FilterFragment and diagfrag_filter.xml)
 * [x] Replace all icon drawables and other static image assets with [vector drawables](http://guides.codepath.com/android/Drawables#vector-drawables) where appropriate.
 * [x] Replace Picasso with [Glide](http://inthecheesefactory.com/blog/get-to-know-glide-recommended-by-google/en) for more efficient image rendering.
 * [x] Uses [retrolambda expressions](http://guides.codepath.com/android/Lambda-Expressions) to cleanup event handling blocks.
@@ -44,6 +44,7 @@ The following **additional** features are implemented:
 * [x] Added a TAG for every view which shows the News Desk value if present else uses Section Name
 * [x] Added published date in the view for user to understand what date the article was published
 * [x] Date picker does not allow you to set a begin date from than the current date
+* [x] New icon for app. Created using https://romannurik.github.io/AndroidAssetStudio/index.html
 * [x] Splash Activity is added
 * [x] Added Snackbar when no internet connection(example part of video walkthrough), when no results are retrieved(example image below, not a part of walkthrough) or another when there is an error in retrieving results from the API.
 
