@@ -45,13 +45,16 @@ The following **additional** features are implemented:
 * [x] Added published date in the view for user to understand what date the article was published
 * [x] Date picker does not allow you to set a begin date from than the current date
 * [x] Splash Activity is added
-* [x] Added Snackbar for no internet connection
+* [x] Added Snackbar when no internet connection(example part of video walkthrough), when no results are retrieved(example image below, not a part of walkthrough) or another when there is an error in retrieving results from the API.
 
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 [Link to Video Walkthrough](https://www.dropbox.com/s/es6u5rliror744n/NYTSearch.mp4?dl=0)
+
+Another image not captured in the walkthrough is a snackbar when no results are returned
+<img src='https://www.dropbox.com/s/lwho1xo3wrnp7ef/NoResultsSnackbar.png?dl=0' title='Another example of Snackbar' width='' alt='Snacbar example from app'/>
 
 
 ## Notes
