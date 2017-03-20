@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6E0A53</color>
-    <color name="colorPrimaryDark">#6E0A53</color>
-    <color name="colorAccent">#AA0055</color>
+    <color name="colorPrimary">#ffffff</color>
+    <color name="colorPrimaryDark">#323232</color>
+    <color name="colorAccent">#aa0055</color>
     <color name="gridBorder">#e4e4e4</color>
+    <color name="toolBar">#f4f4f4</color>
+    <color name="redTag">#e50000</color>
+    <color name="actionBarIcon">#ababab</color>
 </resources>

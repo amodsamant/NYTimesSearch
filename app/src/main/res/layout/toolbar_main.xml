@@ -5,7 +5,16 @@
     android:minHeight="?attr/actionBarSize"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:titleTextColor="@android:color/white"
-    android:background="?attr/colorAccent"
-    android:id="@+id/toolbar">
+    android:elevation="4dp"
+    android:background="@color/toolBar"
+    android:id="@+id/toolbar"
+    >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_launcher"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"/>
+
 </android.support.v7.widget.Toolbar>

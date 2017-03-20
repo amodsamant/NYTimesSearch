@@ -1,8 +1,5 @@
 package com.nytimessearch.models;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.parceler.Parcel;
 
 import java.util.ArrayList;
@@ -13,12 +10,11 @@ public class NYTArticle {
 
     String webUrl;
     String headline;
-    String snippet;
     String source;
     String publishedDate;
-    String thumbnail;
-    String section;
-
+    String thumbnailGrid1;
+    String thumbnailGrid2;
+    String newsDesk;
 
     public String getWebUrl() {
         return webUrl;
@@ -28,33 +24,21 @@ public class NYTArticle {
         return headline;
     }
 
-    public String getThumbnail() {
-        return thumbnail;
+    public String getThumbnailGrid1() {
+        return thumbnailGrid1;
+    }
+    public String getThumbnailGrid2() {
+        return thumbnailGrid2;
     }
 
-    public String getSection() { return section; }
+    public String getNewsDesk() { return newsDesk; }
+
+    public String getPublishedDate() {
+        return publishedDate;
+    }
 
     public NYTArticle() {
 
-    }
-
-    public NYTArticle(JSONObject jsonObject) {
-
-        try{
-            this.webUrl = jsonObject.getString("web_url");
-            this.headline = jsonObject.getJSONObject("headline").getString("main");
-            JSONArray multimediaArray = jsonObject.getJSONArray("multimedia");
-
-            if(multimediaArray.length() > 0) {
-                this.thumbnail = "http://www.nytimes.com/" +
-                        multimediaArray.getJSONObject(0).getString("url");
-            } else {
-                this.thumbnail = "";
-            }
-
-        } catch (JSONException e) {
-
-        }
     }
 
     public static List<NYTArticle> getArticlesFromJson(NYTArticleResponse articleResponse){
@@ -69,13 +53,52 @@ public class NYTArticle {
                 if (doc.getHeadline() != null) {
                     article.headline = doc.getHeadline().getMain();
                 }
-                if (doc.getMultimedia() != null && !doc.getMultimedia().isEmpty()
-                        && doc.getMultimedia().get(0) != null) {
-                    article.thumbnail = "http://www.nytimes.com/" + doc.getMultimedia().get(0).getUrl();
+                if (doc.getMultimedia() != null && !doc.getMultimedia().isEmpty()) {
+
+                    List<Multimedium> multimediums = doc.getMultimedia();
+                    for(Multimedium multimedium: multimediums) {
+
+                        if(multimedium.getSubtype().equalsIgnoreCase("thumbnail")) {
+                            article.thumbnailGrid2 = "http://www.nytimes.com/" +
+                                    multimedium.getUrl();
+                        }
+
+                        if(multimedium.getSubtype().equalsIgnoreCase("xlarge")) {
+                            article.thumbnailGrid1 = "http://www.nytimes.com/" +
+                                    multimedium.getUrl();
+                        }
+
+                    }
+
+
+//                    if(doc.getMultimedia().size()>2) {
+//                        if(doc.getMultimedia().get(2) != null) {
+//                            article.thumbnailGrid2 = "http://www.nytimes.com/" +
+//                                    doc.getMultimedia().get(2).getUrl();
+//                        }
+//                        if(doc.getMultimedia().get(1) != null) {
+//                            article.thumbnailGrid1 = "http://www.nytimes.com/" +
+//                                    doc.getMultimedia().get(1).getUrl();
+//                        }
+//                    } else if(doc.getMultimedia().get(0)!=null) {
+//                        article.thumbnailGrid1 = "http://www.nytimes.com/" +
+//                                doc.getMultimedia().get(0).getUrl();
+//                        article.thumbnailGrid2 = "http://www.nytimes.com/" +
+//                                doc.getMultimedia().get(0).getUrl();
+//                    }
                 }
 
-                if(doc.getSectionName() != null && !doc.getSectionName().isEmpty()) {
-                    article.section = "# " + doc.getSectionName() + " ";
+                if(doc.getNewsDesk() != null && !doc.getNewsDesk().isEmpty()) {
+
+                    String tag = doc.getNewsDesk();
+                    if(tag.equalsIgnoreCase("NONE") && doc.getSectionName()!=null ) {
+                        tag = doc.getSectionName();
+                    }
+                    article.newsDesk = "# " + tag + " ";
+                }
+
+                if(doc.getPubDate()!=null && !doc.getPubDate().isEmpty()) {
+                    article.publishedDate = doc.getPubDate();
                 }
 
                 articles.add(article);
@@ -83,22 +106,7 @@ public class NYTArticle {
         } else {
             //TODO: Log error
         }
-
-
         return articles;
     }
 
-//    public static List<NYTArticle> fromJSONArray(JSONArray articlesJson) {
-//
-//        List<NYTArticle> articles = new ArrayList<>();
-//        for(int x = 0; x < articlesJson.length(); x++) {
-//            try {
-//                articles.add(new NYTArticle(articlesJson.getJSONObject(x)));
-//            } catch (JSONException e) {
-//
-//            }
-//        }
-//
-//        return articles;
-//    }
 }

@@ -4,11 +4,19 @@
     tools:context="com.nytimessearch.activities.SearchActivity">
 
     <item android:id="@+id/action_search"
-        android:orderInCategory="5"
+        android:orderInCategory="3"
         android:title="Search"
-        android:icon="@android:drawable/ic_menu_search"
+        android:icon="@drawable/ic_search"
         app:showAsAction="always|collapseActionView"
-        app:actionViewClass="android.support.v7.widget.SearchView" />
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        />
+
+    <item android:id="@+id/action_grid"
+        android:orderInCategory="4"
+        android:title="Grid"
+        android:icon="@drawable/ic_grid2"
+        app:showAsAction="always"/>
+
 
     <item android:id="@+id/action_filter"
         android:orderInCategory="5"

@@ -8,13 +8,6 @@
     android:background="@drawable/stag_grid_background">
 
     <TextView
-        android:id="@+id/tv_tag_main"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/tag_background"
-        android:textColor="@android:color/white"/>
-
-    <TextView
         android:id="@+id/tv_headline_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,6 +17,26 @@
         android:textSize="22sp"
         android:maxLines="3"
         android:ellipsize="end"/>
+
+    <TextView
+        android:id="@+id/tv_tag_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/tag_background"
+        android:textColor="@android:color/white"
+        android:padding="3dp"
+        android:textAllCaps="true"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:id="@+id/tv_pub_date_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        android:textAllCaps="true"
+        android:layout_marginTop="5dp"/>
 
     <TextView
         android:id="@+id/tv_content"

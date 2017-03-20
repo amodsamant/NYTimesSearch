@@ -8,14 +8,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-public interface NYTArticeService {
+public interface NYTArticleService {
     @GET("articlesearch.json")
     public Call<NYTArticleResponse> getArticles(@Query("api-key") String apiKey,
                                                 @Query("q") String query,
-                                                @Query("page") int page);
-
-    @GET("articlesearch.json")
-    public Call<NYTArticleResponse> getArticles(@Query("api-key") String apiKey,
                                                 @Query("page") int page);
 
     @GET("articlesearch.json")

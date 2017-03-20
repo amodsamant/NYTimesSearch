@@ -9,6 +9,7 @@ public class ViewHolderImage extends RecyclerView.ViewHolder {
 
     public ImageView ivThumbnail;
     public TextView tvTag;
+    public TextView tvPublishedDate;
     public TextView tvHeadline;
 
     public ViewHolderImage(View itemView) {
@@ -16,6 +17,7 @@ public class ViewHolderImage extends RecyclerView.ViewHolder {
         ivThumbnail = (ImageView) itemView.findViewById(R.id.iv_thumbnail);
         tvTag = (TextView) itemView.findViewById(R.id.tv_tag);
         tvHeadline = (TextView) itemView.findViewById(R.id.tv_headline);
+        tvPublishedDate = (TextView) itemView.findViewById(R.id.tv_pub_date);
     }
 
     public ImageView getIvThumbnail() {

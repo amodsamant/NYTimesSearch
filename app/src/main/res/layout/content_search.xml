@@ -12,12 +12,14 @@
     <include
         layout="@layout/toolbar_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        app:layout_scrollFlags="scroll|enterAlways"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvResults"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 </RelativeLayout>

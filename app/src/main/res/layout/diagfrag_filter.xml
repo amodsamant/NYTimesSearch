@@ -3,14 +3,13 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
-    android:gravity="center">
+    android:gravity="center_vertical">
 
     <TextView
         android:id="@+id/tv_begin_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="serif"
-        android:gravity="center_vertical|center_horizontal"
         android:text="@string/tv_begin_date"
         android:textColor="@color/colorAccent"
         android:textSize="18dp"
@@ -19,20 +18,19 @@
 
     <TextView
         android:id="@+id/tv_begin_date_value"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:fontFamily="serif"
-        android:gravity="center_vertical|center_horizontal"
         android:inputType="date"
-        android:textSize="16dp"/>
+        android:textSize="16dp"
+        android:hint="Click to set..."/>
 
     <TextView
         android:id="@+id/tv_sort_order"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="serif"
-        android:gravity="center_vertical|center_horizontal"
         android:text="@string/tv_sort_order"
         android:textColor="@color/colorAccent"
         android:textSize="18dp"
@@ -53,7 +51,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="serif"
-        android:gravity="center_vertical|center_horizontal"
         android:text="@string/tv_news_desk"
         android:textColor="@color/colorAccent"
         android:textSize="18dp"
@@ -64,24 +61,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="serif"
-        android:text="@string/arts"
-        android:layout_marginLeft="@dimen/fab_margin"/>
+        android:text="@string/arts"/>
 
     <CheckBox
         android:id="@+id/cb_fashion_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/fashion_style"
-        android:fontFamily="serif"
-        android:layout_marginLeft="@dimen/fab_margin"/>
+        android:fontFamily="serif"/>
 
     <CheckBox
         android:id="@+id/cb_sports"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/sports"
-        android:fontFamily="serif"
-        android:layout_marginLeft="@dimen/fab_margin"/>
+        android:fontFamily="serif"/>
 
     <Button
         android:id="@+id/btn_save"

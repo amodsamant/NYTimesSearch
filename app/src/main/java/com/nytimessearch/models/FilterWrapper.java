@@ -9,7 +9,6 @@ public class FilterWrapper {
     boolean sports;
 
     public FilterWrapper() {
-
     }
 
     public FilterWrapper(String beginDate, String sort, boolean arts,
@@ -62,15 +61,14 @@ public class FilterWrapper {
     }
 
     public String getArts() {
-        return "Arts";
+        return "\"Arts\"";
     }
 
     public String getFashionStyle() {
-        return "Fashion & Style";
+        return "\"Fashion & Style\"";
     }
 
     public String getSports() {
-        return "Sports";
+        return "\"Sports\"";
     }
-
 }

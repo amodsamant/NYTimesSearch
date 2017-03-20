@@ -14,6 +14,8 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -26,6 +28,7 @@ import com.nytimessearch.models.NYTArticle;
 import com.nytimessearch.models.NYTArticleResponse;
 import com.nytimessearch.network.NYTimesRetroClient;
 import com.nytimessearch.network.NetworkUtils;
+import com.nytimessearch.utils.GenericUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -54,7 +57,9 @@ public class SearchActivity extends AppCompatActivity
     // Store a member variable for the listener
     private EndlessRecyclerViewScrollListener scrollListener;
 
-    private StaggeredGridLayoutManager gridLayoutManager;
+    private StaggeredGridLayoutManager gridLayoutManagerSpan1;
+
+    private StaggeredGridLayoutManager gridLayoutManagerSpan2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,11 +67,12 @@ public class SearchActivity extends AppCompatActivity
         setContentView(R.layout.activity_search);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
         setupViews();
 
         checkNetworkInternetConnectivity();
 
-        currentQuery = "";
+        currentQuery = null;
 
        searchArticles(currentQuery,0);
 
@@ -75,8 +81,11 @@ public class SearchActivity extends AppCompatActivity
     private void setupViews() {
 
         coordinatorLayout = (CoordinatorLayout)findViewById(R.id.coordinatorLayout);
+        gridLayoutManagerSpan1 =
+                new StaggeredGridLayoutManager(GenericUtils.spanCount,
+                        StaggeredGridLayoutManager.VERTICAL);
 
-        gridLayoutManager =
+        gridLayoutManagerSpan2 =
                 new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
         rvArticles = (RecyclerView) findViewById(R.id.rvResults);
@@ -86,10 +95,10 @@ public class SearchActivity extends AppCompatActivity
         rvArticles.setAdapter(adapter);
 
         // Attach the layout manager to the recycler view
-        rvArticles.setLayoutManager(gridLayoutManager);
+        rvArticles.setLayoutManager(gridLayoutManagerSpan1);
 
         // Retain an instance so that you can call `resetState()` for fresh searches
-        scrollListener = new EndlessRecyclerViewScrollListener(gridLayoutManager) {
+        scrollListener = new EndlessRecyclerViewScrollListener(gridLayoutManagerSpan1) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 // Triggered only when new data is needed. Endless scrolling
@@ -108,6 +117,11 @@ public class SearchActivity extends AppCompatActivity
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        EditText etSearchView = (EditText) searchView.
+                findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        etSearchView.setTextColor(Color.GRAY);
+        etSearchView.setHintTextColor(Color.GRAY);
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -121,7 +135,7 @@ public class SearchActivity extends AppCompatActivity
                     adapter.notifyDataSetChanged();
                     scrollListener.resetState();
 
-                    searchArticles(query, 0);
+                    searchArticles(currentQuery, 0);
                 }
                 searchView.clearFocus();
                 return true;
@@ -129,6 +143,12 @@ public class SearchActivity extends AppCompatActivity
 
             @Override
             public boolean onQueryTextChange(String newText) {
+
+                if(newText.length()>0) {
+                    currentQuery = newText;
+                } else {
+                    currentQuery = null;
+                }
                 return false;
             }
         });
@@ -142,6 +162,17 @@ public class SearchActivity extends AppCompatActivity
         switch(item.getItemId()) {
             case R.id.action_filter:
                 showFilterDialog();
+                break;
+            case R.id.action_grid:
+                if(GenericUtils.spanCount==1) {
+                    GenericUtils.spanCount = 2;
+                    item.setIcon(R.drawable.ic_grid1);
+                    rvArticles.setLayoutManager(gridLayoutManagerSpan2);
+                } else {
+                    GenericUtils.spanCount = 1;
+                    item.setIcon(R.drawable.ic_grid2);
+                    rvArticles.setLayoutManager(gridLayoutManagerSpan1);
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -170,6 +201,13 @@ public class SearchActivity extends AppCompatActivity
     @Override
     public void onFinishEditDialog(FilterWrapper filter) {
         this.filter = filter;
+
+        Toast.makeText(this,"Filters Applied!",Toast.LENGTH_SHORT).show();
+        articles.clear();
+        adapter.notifyDataSetChanged();
+        scrollListener.resetState();
+        searchArticles(currentQuery,0);
+
     }
 
 

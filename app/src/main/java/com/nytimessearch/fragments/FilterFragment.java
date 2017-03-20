@@ -18,7 +18,6 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nytimessearch.R;
 import com.nytimessearch.models.FilterWrapper;
@@ -72,11 +71,11 @@ public class FilterFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
 
         tvBeginDate = (TextView) view.findViewById(R.id.tv_begin_date_value);
-        if(getArguments().getString("beginDate")!=null) {
+        if(getArguments().getString("beginDate")!=null &&
+                !getArguments().getString("beginDate").isEmpty()) {
             tvBeginDate.setText(getArguments().getString("beginDate"));
-        } else {
-            tvBeginDate.setText(DateUtils.getCurrentDate());
         }
+
         tvBeginDate.setOnClickListener(v -> {
 
             // Get current date
@@ -90,7 +89,7 @@ public class FilterFragment extends DialogFragment {
                     cal.get(Calendar.DAY_OF_MONTH));
 
             datePickerDialog.setCancelable(true);
-            datePickerDialog.setTitle("Select the Begin Date");
+            datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
 
             Window window = datePickerDialog.getWindow();
             window.setLayout(WindowManager.LayoutParams.WRAP_CONTENT,
@@ -127,7 +126,6 @@ public class FilterFragment extends DialogFragment {
                     cbArts.isChecked(),
                     cbFashionStyle.isChecked(),
                     cbSports.isChecked()));
-            Toast.makeText(getContext(),"SAVE!",Toast.LENGTH_SHORT).show();
             dismiss();
         });
     }
@@ -159,20 +157,15 @@ public class FilterFragment extends DialogFragment {
 
     @Override
     public void onResume() {
-//        DisplayMetrics dm = new DisplayMetrics();
-//        int width = getResources().
-//        int height = getResources().getDimensionPixelSize(R.dimen.popup_height);
-//        getDialog().getWindow().setLayout(width, height);
-
-        // Store access variables for window and blank point
         Window window = getDialog().getWindow();
         Point size = new Point();
-        // Store dimensions of the screen in `size`
+
         Display display = window.getWindowManager().getDefaultDisplay();
         display.getSize(size);
         window.setLayout((int) (size.x * 0.6), (int) (size.x * 0.9));//WindowManager.LayoutParams.MATCH_PARENT);
         window.setGravity(Gravity.CENTER);
-        // Call super onResume after sizing
+
+        // Calling super onResume after sizing
         super.onResume();
 
     }
