@@ -1,9 +1,11 @@
-package com.nytimessearch;
+package com.nytimessearch.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.nytimessearch.R;
 
 public class ViewHolderImage extends RecyclerView.ViewHolder {
 

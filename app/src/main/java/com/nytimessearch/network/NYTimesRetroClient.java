@@ -1,18 +1,19 @@
 package com.nytimessearch.network;
 
+import com.nytimessearch.interfaces.NYTArticleService;
 import com.nytimessearch.models.FilterWrapper;
 import com.nytimessearch.models.NYTArticleResponse;
 import com.nytimessearch.utils.DateUtils;
 
 import retrofit2.Call;
 
-import static com.nytimessearch.network.NYTArticleService.retrofit;
+import static com.nytimessearch.interfaces.NYTArticleService.retrofit;
 
 public class NYTimesRetroClient {
     // dac417bd142940b1ae1ff7a36261426f
     // ae0446ab51eb416c9aa42ee2bb4ec024
     // 227c750bb7714fc39ef1559ef1bd8329
-    private final String API_KEY = "dac417bd142940b1ae1ff7a36261426f";
+    private final String API_KEY = "ae0446ab51eb416c9aa42ee2bb4ec024";
 
     public NYTimesRetroClient() {
     }

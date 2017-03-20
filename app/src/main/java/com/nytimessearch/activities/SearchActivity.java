@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.nytimessearch.EndlessRecyclerViewScrollListener;
+import com.nytimessearch.helpers.EndlessRecyclerViewScrollListener;
 import com.nytimessearch.R;
 import com.nytimessearch.adapters.NYTArticlesHeteroAdapter;
 import com.nytimessearch.fragments.FilterFragment;

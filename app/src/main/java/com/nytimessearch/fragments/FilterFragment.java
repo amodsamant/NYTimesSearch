@@ -80,7 +80,6 @@ public class FilterFragment extends DialogFragment {
 
             // Get current date
             Calendar cal = Calendar.getInstance(TimeZone.getDefault());
-
             // Create a date picker dialog
             DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
                     R.style.AppTheme, datePickerListener,
@@ -90,12 +89,10 @@ public class FilterFragment extends DialogFragment {
 
             datePickerDialog.setCancelable(true);
             datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
-
             Window window = datePickerDialog.getWindow();
             window.setLayout(WindowManager.LayoutParams.WRAP_CONTENT,
                     WindowManager.LayoutParams.WRAP_CONTENT);
             window.setGravity(Gravity.CENTER);
-
             datePickerDialog.show();
         });
 
@@ -119,7 +116,6 @@ public class FilterFragment extends DialogFragment {
 
         btnSave = (Button) view.findViewById(R.id.btn_save);
         btnSave.setOnClickListener(v -> {
-
             FilterDialogListener listener = (FilterDialogListener) getActivity();
             listener.onFinishEditDialog(new FilterWrapper(tvBeginDate.getText().toString(),
                     spSortOrder.getSelectedItem().toString(),
@@ -130,10 +126,8 @@ public class FilterFragment extends DialogFragment {
         });
     }
 
-
     private DatePickerDialog.OnDateSetListener datePickerListener =
             new DatePickerDialog.OnDateSetListener() {
-
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                     String beginDate = DateUtils.createBeginDateString(year, dayOfMonth, month);
@@ -159,12 +153,10 @@ public class FilterFragment extends DialogFragment {
     public void onResume() {
         Window window = getDialog().getWindow();
         Point size = new Point();
-
         Display display = window.getWindowManager().getDefaultDisplay();
         display.getSize(size);
-        window.setLayout((int) (size.x * 0.6), (int) (size.x * 0.9));//WindowManager.LayoutParams.MATCH_PARENT);
+        window.setLayout((int) (size.x * 0.6), (int) (size.x * 0.9));
         window.setGravity(Gravity.CENTER);
-
         // Calling super onResume after sizing
         super.onResume();
 

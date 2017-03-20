@@ -1,4 +1,4 @@
-package com.nytimessearch;
+package com.nytimessearch.helpers;
 
 import android.app.Activity;
 import android.app.PendingIntent;
@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.content.ContextCompat;
 
+import com.nytimessearch.R;
 import com.nytimessearch.models.NYTArticle;
 
 public class ChromeCustomTabsHelper {

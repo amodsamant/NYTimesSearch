@@ -11,10 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.nytimessearch.ChromeCustomTabsHelper;
+import com.nytimessearch.helpers.ChromeCustomTabsHelper;
 import com.nytimessearch.R;
-import com.nytimessearch.ViewHolderImage;
-import com.nytimessearch.ViewHolderNoImage;
 import com.nytimessearch.models.NYTArticle;
 import com.nytimessearch.utils.GenericUtils;
 
@@ -42,26 +40,19 @@ public class NYTArticlesHeteroAdapter extends RecyclerView.Adapter<RecyclerView.
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         RecyclerView.ViewHolder viewHolder = null;
-
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-
         switch (viewType) {
-
             case IMAGE:
                 View imView = inflater.inflate(R.layout.item_article_image,parent,false);
                 viewHolder = new ViewHolderImage(imView);
                 break;
-
             case NO_IMAGE:
                 View noImView = inflater.inflate(R.layout.item_article_no_image, parent, false);
                 viewHolder = new ViewHolderNoImage(noImView);
                 break;
-
             default:
                 //TODO:
-
         }
-
         return viewHolder;
     }
 
@@ -70,30 +61,21 @@ public class NYTArticlesHeteroAdapter extends RecyclerView.Adapter<RecyclerView.
 
         final NYTArticle article = articles.get(position);
         holder.itemView.setOnClickListener(v -> {
-
             ChromeCustomTabsHelper helper = new ChromeCustomTabsHelper(v.getContext());
-
             helper.openChromeTab(article);
-
-
         });
 
         switch (holder.getItemViewType()) {
-
             case IMAGE:
                 ViewHolderImage viewHolderImage = (ViewHolderImage) holder;
                 configureViewHolderImage(viewHolderImage, position);
                 break;
-
             case NO_IMAGE:
                 ViewHolderNoImage viewHolderNoImage = (ViewHolderNoImage) holder;
                 configureViewHolderNoImage(viewHolderNoImage, position);
                 break;
-
             default:
-
         }
-
     }
 
     @Override
@@ -127,26 +109,24 @@ public class NYTArticlesHeteroAdapter extends RecyclerView.Adapter<RecyclerView.
             String thumbnail = null;
 
             if(GenericUtils.spanCount==1) {
-                thumbnail = article.getThumbnailGrid1();
-
                 Glide.with(getContext())
-                        .load(thumbnail)
+                        .load(article.getThumbnailGrid1())
                         .override(width, height)
                         .fitCenter()
                         .into(ivThumbnail);
-
             } else {
-                thumbnail = article.getThumbnailGrid2();
-
                 Glide.with(getContext())
-                        .load(thumbnail)
+                        .load(article.getThumbnailGrid2())
                         .override(width/2, height/2)
                         .fitCenter()
                         .into(ivThumbnail);
             }
 
             if(article.getNewsDesk() != null && !article.getNewsDesk().isEmpty()) {
+                float scale = mContext.getResources().getDisplayMetrics().density;
+                int pixels = (int) (4*scale + 0.5f);
                 TextView tvTag = viewHolderImage.tvTag;
+                tvTag.setPadding(pixels,pixels,pixels,pixels);
                 tvTag.setText(article.getNewsDesk());
             }
 
@@ -169,11 +149,18 @@ public class NYTArticlesHeteroAdapter extends RecyclerView.Adapter<RecyclerView.
         NYTArticle article = articles.get(position);
         if(article!=null) {
 
-            TextView tvTag = viewHolderNoImage.tvTag;
-            tvTag.setText(article.getNewsDesk());
+            if(article.getNewsDesk() != null && !article.getNewsDesk().isEmpty()) {
+                float scale = mContext.getResources().getDisplayMetrics().density;
+                int pixels = (int) (4 * scale + 0.5f);
+                TextView tvTag = viewHolderNoImage.tvTag;
+                tvTag.setPadding(pixels, pixels, pixels, pixels);
+                tvTag.setText(article.getNewsDesk());
+            }
 
-            TextView tvHeadline = viewHolderNoImage.tvHeadline;
-            tvHeadline.setText(article.getHeadline());
+            if(article.getHeadline() != null && !article.getHeadline().isEmpty()) {
+                TextView tvHeadline = viewHolderNoImage.tvHeadline;
+                tvHeadline.setText(article.getHeadline());
+            }
 
             if(article.getPublishedDate()!=null && article.getPublishedDate().contains("T")) {
                 TextView tvPublishedDate = viewHolderNoImage.tvPublishedDate;
@@ -182,7 +169,7 @@ public class NYTArticlesHeteroAdapter extends RecyclerView.Adapter<RecyclerView.
                                 .substring(0,article.getPublishedDate().indexOf("T")));
             }
             TextView tvSynopsis = viewHolderNoImage.getTvSynopsis();
-            tvSynopsis.setText(article.getHeadline());
+            tvSynopsis.setText(article.getSnippet());
         }
 
     }

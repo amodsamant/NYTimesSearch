@@ -1,4 +1,4 @@
-package com.nytimessearch.network;
+package com.nytimessearch.interfaces;
 
 import com.nytimessearch.models.NYTArticleResponse;
 

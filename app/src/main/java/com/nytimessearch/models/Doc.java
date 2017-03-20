@@ -30,6 +30,11 @@ public class Doc {
     @Expose
     private String sectionName;
 
+    @SerializedName("snippet")
+    @Expose
+    private String snippet;
+
+
     public String getWebUrl() {
         return webUrl;
     }
@@ -84,5 +89,13 @@ public class Doc {
 
     public void setSectionName(String sectionName) {
         this.sectionName = sectionName;
+    }
+
+    public String getSnippet() {
+        return snippet;
+    }
+
+    public void setSnippet(String snippet) {
+        this.snippet = snippet;
     }
 }

@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#323232</color>
     <color name="colorAccent">#aa0055</color>
     <color name="gridBorder">#e4e4e4</color>
-    <color name="toolBar">#f4f4f4</color>
+    <color name="toolBar">#eeeeee</color>
     <color name="redTag">#e50000</color>
     <color name="actionBarIcon">#ababab</color>
 </resources>

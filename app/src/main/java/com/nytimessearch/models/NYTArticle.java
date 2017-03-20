@@ -15,6 +15,7 @@ public class NYTArticle {
     String thumbnailGrid1;
     String thumbnailGrid2;
     String newsDesk;
+    String snippet;
 
     public String getWebUrl() {
         return webUrl;
@@ -36,6 +37,8 @@ public class NYTArticle {
     public String getPublishedDate() {
         return publishedDate;
     }
+
+    public String getSnippet() {return snippet;}
 
     public NYTArticle() {
 
@@ -67,25 +70,7 @@ public class NYTArticle {
                             article.thumbnailGrid1 = "http://www.nytimes.com/" +
                                     multimedium.getUrl();
                         }
-
                     }
-
-
-//                    if(doc.getMultimedia().size()>2) {
-//                        if(doc.getMultimedia().get(2) != null) {
-//                            article.thumbnailGrid2 = "http://www.nytimes.com/" +
-//                                    doc.getMultimedia().get(2).getUrl();
-//                        }
-//                        if(doc.getMultimedia().get(1) != null) {
-//                            article.thumbnailGrid1 = "http://www.nytimes.com/" +
-//                                    doc.getMultimedia().get(1).getUrl();
-//                        }
-//                    } else if(doc.getMultimedia().get(0)!=null) {
-//                        article.thumbnailGrid1 = "http://www.nytimes.com/" +
-//                                doc.getMultimedia().get(0).getUrl();
-//                        article.thumbnailGrid2 = "http://www.nytimes.com/" +
-//                                doc.getMultimedia().get(0).getUrl();
-//                    }
                 }
 
                 if(doc.getNewsDesk() != null && !doc.getNewsDesk().isEmpty()) {
@@ -99,6 +84,10 @@ public class NYTArticle {
 
                 if(doc.getPubDate()!=null && !doc.getPubDate().isEmpty()) {
                     article.publishedDate = doc.getPubDate();
+                }
+
+                if(doc.getSnippet()!=null && !doc.getSnippet().isEmpty()) {
+                    article.snippet = doc.getSnippet();
                 }
 
                 articles.add(article);
